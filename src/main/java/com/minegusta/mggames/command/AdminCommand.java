@@ -49,8 +49,6 @@ public class AdminCommand implements CommandExecutor
             return true;
         }
 
-        AbstractGame game = Register.getGame(gameName.get());
-
         //Getting the config
         FileConfiguration gameConfig = ConfigManager.getGameConfig();
 
@@ -63,7 +61,7 @@ public class AdminCommand implements CommandExecutor
                 return true;
             }
 
-            gameConfig.set(gameName.get() + "." + ConfigValues.LOBBY_LOCATION, LocationUtil.toString(p.getLocation()));
+            gameConfig.set(gameName.get() + "." + ConfigValues.LOBBY_LOCATION.getPath(), LocationUtil.toString(p.getLocation()));
 
             ChatUtil.sendFormattedMessage(p, "You set the lobby location!", "Use /gamereload for changes to take effect.");
 
@@ -84,13 +82,13 @@ public class AdminCommand implements CommandExecutor
 
         //Editing the config
 
-        if(!gameConfig.isSet(gameName.get() + "." + ConfigValues.WORLDS + "." + world))
+        if(!gameConfig.isSet(gameName.get() + "." + ConfigValues.WORLDS.getPath() + "." + world))
         {
             ChatUtil.sendFormattedMessage(p, "That world does not exist!");
             return true;
         }
 
-        String pathToWorld = gameName.get() + "." + ConfigValues.WORLDS + "." + world;
+        String pathToWorld = gameName.get() + "." + ConfigValues.WORLDS.getPath() + "." + world;
 
         if(!p.getWorld().getName().equals(world))
         {
