@@ -84,7 +84,7 @@ public class KitCommand implements CommandExecutor{
                     {
                         f.set(kitName + "." + i.getName() + ".amount", i.getAmount());
                         f.set(kitName + "." + i.getName() + ".slot", i.getSlot());
-                        f.set(kitName + "." + i.getName() + ".material", i.getMaterial());
+                        f.set(kitName + "." + i.getName() + ".material", i.getMaterial().name());
                         f.set(kitName + "." + i.getName() + ".lore", i.getLore());
                         f.set(kitName + "." + i.getName() + ".data", i.getData());
                     });
