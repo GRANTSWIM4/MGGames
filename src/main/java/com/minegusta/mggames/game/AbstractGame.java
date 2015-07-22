@@ -90,6 +90,7 @@ public abstract class AbstractGame {
         name = f.getString(ConfigValues.NAME.getPath(), "Game");
 
         lobby = LocationUtil.toLocation(f.getString(ConfigValues.LOBBY_LOCATION.getPath(), null));
+        if(lobby == null) lobby = Main.getHub().getSpawnLocation();
 
         addTeams();
 

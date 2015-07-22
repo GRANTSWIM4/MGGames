@@ -20,7 +20,7 @@ public class VoteCommand implements CommandExecutor{
 
         if(args.length == 0)
         {
-            ChatUtil.sendFormattedMessage(p, "Use the command like this: ", "/Vote <MapeName>");
+            ChatUtil.sendFormattedMessage(p, "Use the command like this: ", "/Vote <MapName>");
             return true;
         }
 

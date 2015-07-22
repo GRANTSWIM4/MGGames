@@ -21,7 +21,7 @@ public class KitCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
 
-        if(!(s instanceof Player) || s.isOp())return true;
+        if(!(s instanceof Player) || !s.isOp())return true;
 
         Player p = (Player) s;
 
