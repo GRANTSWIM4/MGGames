@@ -3,6 +3,7 @@ package com.minegusta.mggames.command;
 import com.minegusta.mggames.config.ConfigManager;
 import com.minegusta.mggames.game.StopReason;
 import com.minegusta.mggames.kits.KitRegistry;
+import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.register.Register;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

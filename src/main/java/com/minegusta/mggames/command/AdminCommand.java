@@ -65,8 +65,7 @@ public class AdminCommand implements CommandExecutor
 
             gameConfig.set(gameName + "." + ConfigValues.LOBBY_LOCATION, LocationUtil.toString(p.getLocation()));
 
-            //Update the game
-            game.addLocations(gameConfig.getConfigurationSection(gameName.get()));
+            ChatUtil.sendFormattedMessage(p, "You set the lobby location!", "Use /gamereload for changes to take effect.");
 
             //Saving the config
             ConfigManager.saveGameConfig(gameConfig);
@@ -104,19 +103,18 @@ public class AdminCommand implements CommandExecutor
         if(args[2].equalsIgnoreCase("add"))
         {
             gameConfig.set(pathToWorld + "." + path, saved);
+            ChatUtil.sendFormattedMessage(p, "You added a location to the config!", "Use /gamereload for changes to take effect.");
         }
         else if(args[2].equalsIgnoreCase("remove"))
         {
             gameConfig.set(pathToWorld + "." + path, null);
+            ChatUtil.sendFormattedMessage(p, "You removed a location from the config!", "Use /gamereload for changes to take effect.");
         }
         else
         {
             ChatUtil.sendFormattedMessage(p, infoList);
             return true;
         }
-
-        //Update the game
-        game.addLocations(gameConfig.getConfigurationSection(gameName.get()));
 
         //Saving the config
         ConfigManager.saveGameConfig(gameConfig);
