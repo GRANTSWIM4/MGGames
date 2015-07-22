@@ -243,7 +243,10 @@ public abstract class AbstractGame {
         mgp.clearInventory();
         setTeam(mgp);
         mgp.setSession(this);
-        if(!getAvailableKits().isEmpty())mgp.setKit(KitRegistry.getKit(availableKits.get(0)));
+        if(!getAvailableKits().isEmpty())
+        {
+            mgp.setKit(KitRegistry.getKit(availableKits.get(0)));
+        }
         mgp.getPlayer().teleport(lobby);
 
         if(getPlayers().size() >= getMaxPlayers() && !starting)
