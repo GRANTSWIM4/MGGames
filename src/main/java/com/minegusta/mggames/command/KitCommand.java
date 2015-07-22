@@ -57,7 +57,16 @@ public class KitCommand implements CommandExecutor{
                 ItemStack pick = p.getInventory().getItem(i);
                 if(pick != null && pick.getType() != Material.AIR)
                 {
-                    items.add(new MGItem(pick.getItemMeta().getDisplayName(), i, pick.getType(), pick.getAmount(), pick.getDurability(), pick.getItemMeta().getLore().get(0)));
+                    String name = pick.getType().name();
+                    String lore = "";
+
+                    try
+                    {
+                        name = pick.getItemMeta().getDisplayName();
+                        lore = pick.getItemMeta().getLore().get(0);
+                    } catch (Exception ignored){}
+
+                    items.add(new MGItem(name, i, pick.getType(), pick.getAmount(), pick.getDurability(), lore));
                 }
             }
 
