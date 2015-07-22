@@ -3,6 +3,7 @@ package com.minegusta.mggames.kits;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.minegusta.mggames.config.ConfigManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.potion.PotionEffect;

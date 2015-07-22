@@ -29,8 +29,8 @@ public class Kit
 
     public void apply(Player p)
     {
-        p.getInventory().setContents(new ItemStack[]{null});
-        p.getInventory().setArmorContents(new ItemStack[]{null});
+        p.getInventory().setContents(new ItemStack[]{});
+        p.getInventory().setArmorContents(new ItemStack[]{null, null, null, null});
 
         for(MGItem i : items)
         {

@@ -1,16 +1,30 @@
 package com.minegusta.mggames.player;
 
+import com.google.common.collect.Lists;
 import com.minegusta.mggames.game.AbstractGame;
 import com.minegusta.mggames.game.Team;
 import com.minegusta.mggames.kits.Kit;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
 public class MGPlayer {
+
+    private static final ItemStack watch = new ItemStack(Material.WATCH, 1)
+    {
+        {
+            ItemMeta meta = getItemMeta();
+            meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Teleport Interface");
+            meta.setLore(Lists.newArrayList(ChatColor.LIGHT_PURPLE + "Use this to navigate!"));
+
+            setItemMeta(meta);
+        }
+    };
 
     private int kills = 0;
     private int deaths = 0;
@@ -53,6 +67,11 @@ public class MGPlayer {
         this.session = game;
     }
 
+    public void giveWatch()
+    {
+        getPlayer().getInventory().setItem(0, watch);
+    }
+
     public void setTeam(Team team)
     {
         this.team = team;
@@ -85,8 +104,8 @@ public class MGPlayer {
 
     public void clearInventory()
     {
-        getPlayer().getInventory().setContents(new ItemStack[]{null});
-        getPlayer().getInventory().setArmorContents(new ItemStack[]{null});
+        getPlayer().getInventory().setContents(new ItemStack[]{});
+        getPlayer().getInventory().setArmorContents(new ItemStack[]{null, null, null, null});
         getPlayer().updateInventory();
     }
 
@@ -99,6 +118,11 @@ public class MGPlayer {
         this.kit = null;
         this.kills = 0;
 
+        clearPotions();
+    }
+
+    public void clearPotions()
+    {
         getPlayer().getActivePotionEffects().stream().forEach(e ->
         {
             getPlayer().removePotionEffect(e.getType());

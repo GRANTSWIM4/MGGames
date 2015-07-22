@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KitCommand implements CommandExecutor{
     @Override
@@ -74,10 +75,26 @@ public class KitCommand implements CommandExecutor{
                 }
             }
 
-            for(PotionEffect effect : p.getActivePotionEffects())
+            for(int i = 100; i < 104; i++)
             {
-                effects.add(effect);
+                ItemStack pick = p.getInventory().getItem(i);
+                if(pick != null && pick.getType() != Material.AIR)
+                {
+                    String name = pick.getType().name();
+                    String lore = "";
+
+                    try
+                    {
+                        String nameNew = pick.getItemMeta().getDisplayName();
+                        if(nameNew != null) name = nameNew;
+                        lore = pick.getItemMeta().getLore().get(0);
+                    } catch (Exception ignored){}
+
+                    items.add(new MGItem(name, i, pick.getType(), pick.getAmount(), pick.getDurability(), lore));
+                }
             }
+
+            effects.addAll(p.getActivePotionEffects().stream().collect(Collectors.toList()));
 
 
             ChatUtil.sendFormattedMessage(p, "You added kit " + kitName + ".");
@@ -93,9 +110,7 @@ public class KitCommand implements CommandExecutor{
                         f.set(kitName + "." + slot + ".data", i.getData());
                     });
             effects.stream().forEach(effect ->
-            {
-                f.set(kitName + "." + "potion-effects." + effect.getType().getName(), effect.getAmplifier());
-            });
+                    f.set(kitName + "." + "potion-effects." + effect.getType().getName(), effect.getAmplifier()));
 
 
             ConfigManager.saveKitFile(f);

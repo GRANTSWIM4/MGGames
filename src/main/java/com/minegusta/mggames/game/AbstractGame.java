@@ -298,6 +298,7 @@ public abstract class AbstractGame {
         mgp.clearInventory();
         mgp.getPlayer().setGameMode(GameMode.SURVIVAL);
         mgp.getPlayer().teleport(Main.getHub().getSpawnLocation());
+        mgp.giveWatch();
     }
 
 
