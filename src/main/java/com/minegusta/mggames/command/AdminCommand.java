@@ -1,0 +1,126 @@
+package com.minegusta.mggames.command;
+
+import com.google.common.collect.Lists;
+import com.minegusta.mggames.config.ConfigManager;
+import com.minegusta.mggames.game.AbstractGame;
+import com.minegusta.mggames.game.ConfigValues;
+import com.minegusta.mggames.main.Main;
+import com.minegusta.mggames.register.Register;
+import com.minegusta.mggames.util.ChatUtil;
+import com.minegusta.mggames.util.LocationUtil;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+
+import java.util.List;
+import java.util.Optional;
+
+public class AdminCommand implements CommandExecutor
+{
+    @Override
+    public boolean onCommand(CommandSender s, Command command, String label, String[] args) {
+
+        if(!(s instanceof Player) || !s.isOp())return true;
+
+        Player p = (Player) s;
+
+        List<String> infoList = Lists.newArrayList(ChatColor.GOLD + "Please use the command like this:", "/game <gamesession> lobby", "/game <gamesession> <world> add <name>", "/game <gamesession> <world> remove <name>", " - - - - - - - -");
+
+        for(ConfigValues v : ConfigValues.values())
+        {
+            infoList.add(ChatColor.GREEN + v.getPath());
+        }
+
+        if(args.length < 2)
+        {
+            ChatUtil.sendFormattedMessage(p, infoList);
+            return true;
+        }
+
+        String session = args[0];
+
+        Optional<String> gameName = Register.getSessionNames().stream().filter(string -> string.equalsIgnoreCase(session)).findFirst();
+        if(!gameName.isPresent())
+        {
+            ChatUtil.sendFormattedMessage(p, "That game session does not exist in memory.");
+            return true;
+        }
+
+        AbstractGame game = Register.getGame(gameName.get());
+
+        //Getting the config
+        FileConfiguration gameConfig = ConfigManager.getGameConfig();
+
+
+        if(args[1].equalsIgnoreCase("lobby"))
+        {
+            if(p.getWorld() != Main.getHub())
+            {
+                ChatUtil.sendFormattedMessage(p, "You need to use that command in the hub world!");
+                return true;
+            }
+
+            gameConfig.set(gameName + "." + ConfigValues.LOBBY_LOCATION, LocationUtil.toString(p.getLocation()));
+
+            //Update the game
+            game.addLocations(gameConfig.getConfigurationSection(gameName.get()));
+
+            //Saving the config
+            ConfigManager.saveGameConfig(gameConfig);
+
+            return true;
+        }
+
+        if(args.length < 4)
+        {
+            ChatUtil.sendFormattedMessage(p, infoList);
+            return true;
+        }
+
+        String world = args[1];
+        String path = args[3];
+
+        //Editing the config
+
+        if(!gameConfig.isSet(gameName + "." + ConfigValues.WORLDS + "." + world))
+        {
+            ChatUtil.sendFormattedMessage(p, "That world does not exist!");
+            return true;
+        }
+
+        String pathToWorld = gameName + "." + ConfigValues.WORLDS + "." + world;
+
+        if(!p.getWorld().getName().equals(world))
+        {
+            ChatUtil.sendFormattedMessage(p, "You have to be in that world to edit the spawnpoints!");
+            return true;
+        }
+
+        String saved = LocationUtil.toString(p.getLocation());
+
+        if(args[2].equalsIgnoreCase("add"))
+        {
+            gameConfig.set(pathToWorld + "." + path, saved);
+        }
+        else if(args[2].equalsIgnoreCase("remove"))
+        {
+            gameConfig.set(pathToWorld + "." + path, null);
+        }
+        else
+        {
+            ChatUtil.sendFormattedMessage(p, infoList);
+            return true;
+        }
+
+        //Update the game
+        game.addLocations(gameConfig.getConfigurationSection(gameName.get()));
+
+        //Saving the config
+        ConfigManager.saveGameConfig(gameConfig);
+
+        return true;
+    }
+}

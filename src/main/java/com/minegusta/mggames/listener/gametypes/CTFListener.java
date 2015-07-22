@@ -1,0 +1,131 @@
+package com.minegusta.mggames.listener.gametypes;
+
+import com.minegusta.mggames.game.GameTypes;
+import com.minegusta.mggames.game.TeamType;
+import com.minegusta.mggames.gametype.CaptureTheFlag;
+import com.minegusta.mggames.player.MGPlayer;
+import com.minegusta.mggames.register.Register;
+import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+public class CTFListener implements Listener
+{
+
+    //Stop drops on death in ctf
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e)
+    {
+        MGPlayer mgp = Register.getPlayer(e.getEntity());
+        if(mgp.getSession() != null && mgp.getSession().getGameType() == GameTypes.CTF)
+        {
+            e.getDrops().clear();
+            e.getEntity().getInventory().clear();
+            e.setDroppedExp(0);
+
+            CaptureTheFlag ctf = (CaptureTheFlag) mgp.getSession();
+
+            ctf.onDeath(mgp);
+        }
+    }
+
+    //Stop dropping of items in ctf
+    @EventHandler
+    public void onDrop(PlayerDropItemEvent e)
+    {
+        Player p = e.getPlayer();
+        MGPlayer mgp = Register.getPlayer(p);
+
+        if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF) return;
+
+        ChatUtil.sendGameMessage(p, "You cannot drop items in CTF!");
+        e.setCancelled(true);
+    }
+
+    //block team damage in ctf
+    @EventHandler
+    public void onTeamDamage(EntityDamageByEntityEvent e)
+    {
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof Player)
+        {
+            Player damager = (Player) e.getDamager();
+            Player victim = (Player) e.getEntity();
+            MGPlayer damagerMGP = Register.getPlayer(damager);
+            MGPlayer victimMGP = Register.getPlayer(victim);
+
+            if(damagerMGP.getSession() == null || damagerMGP.getSession().getGameType() != GameTypes.CTF || victimMGP.getSession() == null || victimMGP.getSession().getGameType() != GameTypes.CTF) return;
+
+            if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
+            {
+                e.setCancelled(true);
+                return;
+            }
+        }
+        else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player && e.getEntity() instanceof Player)
+        {
+            Player damager = (Player) ((Arrow) e.getDamager()).getShooter();
+            Player victim = (Player) e.getEntity();
+            MGPlayer damagerMGP = Register.getPlayer(damager);
+            MGPlayer victimMGP = Register.getPlayer(victim);
+
+            if(damagerMGP.getSession() == null || damagerMGP.getSession().getGameType() != GameTypes.CTF || victimMGP.getSession() == null || victimMGP.getSession().getGameType() != GameTypes.CTF) return;
+
+            if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
+            {
+                e.setCancelled(true);
+                return;
+            }
+        }
+    }
+
+    //Listen for block hit and flag score
+    @EventHandler
+    public void onFlagHit(PlayerInteractEvent e)
+    {
+        if(!e.hasBlock())return;
+
+        Player p = e.getPlayer();
+        Block clicked = e.getClickedBlock();
+        MGPlayer mgp = Register.getPlayer(p);
+        TeamType team = mgp.getTeam().getType();
+
+
+        if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF)return;
+
+        CaptureTheFlag ctf = (CaptureTheFlag) mgp.getSession();
+
+        //Taking the blue wool
+        if(team == TeamType.RED && !ctf.isBlueWoolTaken() && ctf.getBlueWool() == clicked)
+        {
+            ctf.setBlueFlagCarrier(mgp);
+            ctf.takeBlueWool(mgp);
+        }
+        //Taking the red wool
+        if(team == TeamType.BLUE && !ctf.isRedWoolTaken() && clicked == ctf.getRedWool())
+        {
+            ctf.setRedFlagCarrier(mgp);
+            ctf.takeRedWool(mgp);
+        }
+
+        //Scoring a red point
+        if(team == TeamType.RED && !ctf.isRedWoolTaken() && ctf.isBlueWoolTaken() && clicked == ctf.getRedWool() && ctf.getBlueFlagCarrier() == mgp)
+        {
+            ctf.returnBlueWool();
+            ctf.addScore(TeamType.RED, mgp);
+        }
+
+        //Scoring a blue point
+        if(team == TeamType.BLUE && !ctf.isBlueWoolTaken() && ctf.isRedWoolTaken() && clicked == ctf.getBlueWool() && ctf.getRedFlagCarrier() == mgp)
+        {
+            ctf.returnRedWool();
+            ctf.addScore(TeamType.BLUE, mgp);
+        }
+    }
+}

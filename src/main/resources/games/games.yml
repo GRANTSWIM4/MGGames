@@ -1,0 +1,30 @@
+##Types: CTF,
+
+CTF1:
+   type: CTF
+   worlds:
+      world1:
+        spectator-spawn:
+        team-blue-spawn:
+        team-red-spawn:
+        red-flag:
+        blue-flag:
+   max-time: 10
+   name: 'name'
+   break-blocks: false
+   build-blocks: false
+   respawn-with-kit: true
+   lobby:
+   winner-commands:
+    - 'addcredits %name% 10'
+   tie-commands:
+    - ''
+   loser-commands:
+    - ''
+   min-players: 26
+   flag-lives: 3
+   kits:
+    - WARRIOR
+    - TANK
+   max-players: 2
+   grace-time: 10

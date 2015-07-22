@@ -1,0 +1,18 @@
+kitname:
+   potion-effects:
+      speed: 1
+   itemname:
+      material: IRON_SWORD
+      slot: 0
+      lore: 'this is an item'
+      amount: 1
+      datavalue: 0
+kitname2:
+   potion-effects:
+      speed: 1
+   itemname:
+      material: IRON_SWORD
+      slot: 0
+      lore: 'this is an item'
+      amount: 1
+      datavalue: 0

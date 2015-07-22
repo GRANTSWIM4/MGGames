@@ -1,0 +1,26 @@
+main: com.minegusta.mggames.main.Main
+name: MGGames
+author: janie177
+version: ${project.version}
+commands:
+   vote:
+      description: Vote for a map.
+      usage: /vote
+   game:
+      description: Admin commands for setting data.
+      usage: /game
+   join:
+      usage: /Join <Game>
+      description: Join a given game.
+   leave:
+      usage: /Leave
+      description: Leave your current game.
+   gamereload:
+      usage: /gamereload
+      description: Reload all games, effectively pissing everyone off.
+   kit:
+      usage: /kit <add/remove> <name>
+      description: Admin commands to add and remove kits
+   world:
+      usage: /world <list/load/unload/teleport> [worldname]
+      description: Load/Unload and teleport to worlds.
