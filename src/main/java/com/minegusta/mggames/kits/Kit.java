@@ -1,10 +1,8 @@
 package com.minegusta.mggames.kits;
 
 import com.minegusta.mggames.register.Register;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Arrays;
@@ -35,7 +33,24 @@ public class Kit
 
         for(MGItem i : items)
         {
-            p.getInventory().setItem(i.getSlot(), i.buildItem());
+            int slot = i.getSlot();
+            if(slot > 99)
+            {
+                switch (slot)
+                {
+                    case 100: p.getInventory().setBoots(i.buildItem());
+                        break;
+                    case 101: p.getInventory().setLeggings(i.buildItem());
+                        break;
+                    case 102: p.getInventory().setChestplate(i. buildItem());
+                        break;
+                    case 103: p.getInventory().setHelmet(i.buildItem());
+                        break;
+                }
+            }
+            else {
+                p.getInventory().setItem(i.getSlot(), i.buildItem());
+            }
         }
 
         p.updateInventory();
