@@ -1,6 +1,8 @@
 package com.minegusta.mggames.kits;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 
@@ -27,7 +29,10 @@ public class Kit
 
     public void apply(Player p)
     {
-         p.getInventory().clear();
+        for(int i = 0; i < p.getInventory().getContents().length; i++)
+        {
+            p.getInventory().getItem(i).setType(Material.AIR);
+        }
 
         for(MGItem i : items)
         {

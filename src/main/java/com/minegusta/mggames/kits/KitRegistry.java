@@ -44,12 +44,12 @@ public class KitRegistry {
             List<MGItem> items = Lists.newArrayList();
             List<PotionEffect> effects = Lists.newArrayList();
 
-            f.getConfigurationSection(kit).getKeys(false).forEach(item ->
+            f.getConfigurationSection(kit).getKeys(false).forEach(slot ->
             {
-                if (item.equalsIgnoreCase("potion-effects")) {
-                    f.getConfigurationSection(kit + "." + item).getKeys(false).stream().forEach(effect ->
+                if (slot.equalsIgnoreCase("potion-effects")) {
+                    f.getConfigurationSection(kit + "." + slot).getKeys(false).stream().forEach(effect ->
                     {
-                        int amplifier = f.getInt(kit + "." + item + "." + effect, 0);
+                        int amplifier = f.getInt(kit + "." + slot + "." + effect, 0);
                         PotionEffectType type;
 
                         try {
@@ -62,19 +62,18 @@ public class KitRegistry {
                         effects.add(potionEffect);
                     });
                 } else {
-                    String name = item;
-                    String lore = f.getString(kit + "." + item + ".lore");
-                    int slot = f.getInt(kit + "." + item + ".slot");
-                    int amount = f.getInt(kit + "." + item + ".amount");
-                    int data = f.getInt(kit + "." + item + ".data");
+                    String lore = f.getString(kit + "." + slot + ".lore");
+                    String name = f.getString(kit + "." + slot + ".name");
+                    int amount = f.getInt(kit + "." + slot + ".amount");
+                    int data = f.getInt(kit + "." + slot + ".data");
                     Material material;
                     try {
-                        material = Material.valueOf(f.getString(kit + "." + item + ".material"));
+                        material = Material.valueOf(f.getString(kit + "." + slot + ".material"));
                     } catch (Exception ignored) {
                         material = Material.POTATO;
                     }
 
-                    MGItem stack = new MGItem(name, slot, material, amount, data, lore);
+                    MGItem stack = new MGItem(name, Integer.parseInt(slot), material, amount, data, lore);
                     items.add(stack);
                 }
             });

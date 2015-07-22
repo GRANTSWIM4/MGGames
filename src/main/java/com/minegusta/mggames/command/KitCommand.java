@@ -85,12 +85,12 @@ public class KitCommand implements CommandExecutor{
             //Add the entries
             items.stream().forEach(i ->
                     {
-                        String name = ChatColor.stripColor(i.getName());
-                        f.set(kitName + "." + name + ".amount", i.getAmount());
-                        f.set(kitName + "." + name + ".slot", i.getSlot());
-                        f.set(kitName + "." + name + ".material", ChatColor.stripColor(i.getMaterial().name()));
-                        f.set(kitName + "." + name + ".lore", ChatColor.stripColor(i.getLore()));
-                        f.set(kitName + "." + name + ".data", i.getData());
+                        String slot = Integer.toString(i.getSlot());
+                        f.set(kitName + "." + slot + ".amount", i.getAmount());
+                        f.set(kitName + "." + slot + ".name", ChatColor.stripColor(i.getName()));
+                        f.set(kitName + "." + slot + ".material", i.getMaterial().name());
+                        f.set(kitName + "." + slot + ".lore", ChatColor.stripColor(i.getLore()));
+                        f.set(kitName + "." + slot + ".data", i.getData());
                     });
             effects.stream().forEach(effect ->
             {
