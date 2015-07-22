@@ -361,13 +361,15 @@ public abstract class AbstractGame {
             team.setSpawn(null);
         });
 
-        if(getWorld() != null)
+        if(world != null)
         {
-            for(Player p : getWorld().getPlayers())
+            if(getWorld() != null)
             {
-                p.teleport(Main.getHub().getSpawnLocation());
+                for(Player p : getWorld().getPlayers())
+                {
+                    p.teleport(Main.getHub().getSpawnLocation());
+                }
             }
-
             //unload the played world
             WorldManager.unLoadWorld(world);
         }
