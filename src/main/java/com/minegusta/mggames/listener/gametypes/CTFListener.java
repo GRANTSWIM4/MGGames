@@ -94,10 +94,11 @@ public class CTFListener implements Listener
         Player p = e.getPlayer();
         Block clicked = e.getClickedBlock();
         MGPlayer mgp = Register.getPlayer(p);
-        TeamType team = mgp.getTeam().getType();
 
 
         if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF)return;
+
+        TeamType team = mgp.getTeam().getType();
 
         CaptureTheFlag ctf = (CaptureTheFlag) mgp.getSession();
 

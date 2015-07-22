@@ -52,7 +52,7 @@ public class LoadWorldCommand implements CommandExecutor
             return true;
         }
 
-        if(worldName.equalsIgnoreCase(Main.getHub().getName()))
+        if(worldName.equalsIgnoreCase(Main.getHub().getName()) && !args[0].equalsIgnoreCase("teleport"))
         {
             ChatUtil.sendFormattedMessage(p, "You cannot unload the hub.");
             return true;
