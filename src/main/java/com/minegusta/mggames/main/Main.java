@@ -23,7 +23,6 @@ public class Main extends JavaPlugin {
     {
         PLUGIN = this;
         ConfigManager.loadDefaultConfig();
-        ConfigManager.loadSessions();
 
         //Getting the hub world.
         hub = Bukkit.getWorld(ConfigManager.getDefaultConfig().getString("hub-world"));
@@ -42,6 +41,9 @@ public class Main extends JavaPlugin {
         {
             Bukkit.getPluginManager().registerEvents(l.getListener(), this);
         }
+
+        //Loading all the game sessions
+        ConfigManager.loadSessions();
 
         //Load all kits
         KitRegistry.loadKits();
