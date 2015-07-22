@@ -46,8 +46,7 @@ public class KitRegistry {
 
             f.getConfigurationSection(kit).getKeys(false).forEach(item ->
             {
-                if (item.equalsIgnoreCase("potion-effects"))
-                {
+                if (item.equalsIgnoreCase("potion-effects")) {
                     f.getConfigurationSection(kit + "." + item).getKeys(false).stream().forEach(effect ->
                     {
                         int amplifier = f.getInt(kit + "." + item + "." + effect, 0);
@@ -55,8 +54,7 @@ public class KitRegistry {
 
                         try {
                             type = PotionEffectType.getByName(effect.toUpperCase());
-                        } catch (Exception ignored)
-                        {
+                        } catch (Exception ignored) {
                             type = PotionEffectType.SATURATION;
                         }
 
@@ -70,10 +68,9 @@ public class KitRegistry {
                     int amount = f.getInt(kit + "." + item + ".amount");
                     int data = f.getInt(kit + "." + item + ".data");
                     Material material;
-                    try{
+                    try {
                         material = Material.valueOf(f.getString(kit + "." + item + ".material"));
-                    } catch (Exception ignored)
-                    {
+                    } catch (Exception ignored) {
                         material = Material.POTATO;
                     }
 
@@ -82,7 +79,7 @@ public class KitRegistry {
                 }
             });
 
-            register(kit, new Kit(kit, (MGItem[]) items.toArray(), (PotionEffect[]) effects.toArray()));
+            register(kit, new Kit(kit, items, effects));
 
         });
     }

@@ -1,17 +1,19 @@
 package com.minegusta.mggames.kits;
 
 import org.bukkit.entity.Player;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Kit
 {
-    private MGItem[] items;
-    private PotionEffect[] effects;
+    private List<MGItem> items;
+    private List<PotionEffect> effects;
     private String name;
 
-    public Kit(String name, MGItem[] items, PotionEffect[] effects)
+    public Kit(String name, List<MGItem> items, List<PotionEffect> effects)
     {
         this.name = name;
         this.items = items;
@@ -37,15 +39,15 @@ public class Kit
 
     public void applyEffects(Player p)
     {
-        if(effects.length == 0) return;
-        Arrays.asList(effects).stream().forEach(e ->
+        if(effects.size() == 0) return;
+        effects.stream().forEach(e ->
         {
             p.removePotionEffect(e.getType());
             p.addPotionEffect(e);
         });
     }
 
-    public PotionEffect[] getEffects()
+    public List<PotionEffect> getEffects()
     {
         return effects;
     }
