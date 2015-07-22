@@ -5,6 +5,7 @@ import com.minegusta.mggames.game.Stage;
 import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.util.ChatUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 public class Timer {
 
@@ -57,7 +58,7 @@ public class Timer {
     {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
         {
-            game.getPlayers().stream().forEach(mgp -> ChatUtil.sendFormattedMessage(mgp.getPlayer(), "The game has started!"));
+            game.getPlayers().stream().forEach(mgp -> ChatUtil.sendFormattedMessage(mgp.getPlayer(), ChatColor.DARK_RED + "The game has started! You can now receive damage"));
             game.setStage(Stage.PLAYING);
         },20 * game.getGraceTime());
     }
