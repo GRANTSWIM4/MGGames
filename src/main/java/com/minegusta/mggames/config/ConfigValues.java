@@ -1,4 +1,4 @@
-package com.minegusta.mggames.game;
+package com.minegusta.mggames.config;
 
 public enum ConfigValues
 {
@@ -21,6 +21,8 @@ public enum ConfigValues
     LOSER_COMMANDS("loser-commands"),
     TIE_COMMANDS("tie-commands"),
     AVAILABLE_KITS("kits"),
+    TICKETS("tickets"),
+    UNLOCKABLES("unlockables"),
     ALLOW_BUILD("build-blocks"),
     ALLOW_BREAK("break-blocks"),
     WORLDS("worlds");

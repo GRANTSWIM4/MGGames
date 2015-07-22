@@ -1,12 +1,17 @@
 package com.minegusta.mggames.listener;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mggames.game.GameTypes;
 import com.minegusta.mggames.game.Stage;
+import com.minegusta.mggames.game.TeamType;
 import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +33,7 @@ public class GlobalListener implements Listener {
         if(e.getPlayer().getWorld() != Main.getHub())
         {
             e.getPlayer().teleport(Main.getHub().getSpawnLocation());
+            ChatUtil.sendGameMessage(e.getPlayer(), ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Tickets " + ChatColor.YELLOW + "to view your tickets.", ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Rewards " + ChatColor.YELLOW + "to toggle your active perks.");
         }
         e.setJoinMessage(null);
     }
@@ -205,6 +211,42 @@ public class GlobalListener implements Listener {
         }
     }
 
+    //block team damage
+    @EventHandler
+    public void onTeamDamage(EntityDamageByEntityEvent e)
+    {
+        if(e.getDamager() instanceof Player && e.getEntity() instanceof Player)
+        {
+            Player damager = (Player) e.getDamager();
+            Player victim = (Player) e.getEntity();
+            MGPlayer damagerMGP = Register.getPlayer(damager);
+            MGPlayer victimMGP = Register.getPlayer(victim);
+
+            if(damagerMGP.getTeam() == null ||damagerMGP.getTeam().getType() == TeamType.FFA || victimMGP.getTeam() == null || victimMGP.getTeam().getType() == TeamType.FFA) return;
+
+            if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
+            {
+                e.setCancelled(true);
+                return;
+            }
+        }
+        else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player && e.getEntity() instanceof Player)
+        {
+            Player damager = (Player) ((Arrow) e.getDamager()).getShooter();
+            Player victim = (Player) e.getEntity();
+            MGPlayer damagerMGP = Register.getPlayer(damager);
+            MGPlayer victimMGP = Register.getPlayer(victim);
+
+            if(damagerMGP.getTeam() == null ||damagerMGP.getTeam().getType() == TeamType.FFA || victimMGP.getTeam() == null || victimMGP.getTeam().getType() == TeamType.FFA) return;
+
+            if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
+            {
+                e.setCancelled(true);
+                return;
+            }
+        }
+    }
+
     //Stop placing and breaking blocks if disallowed
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e)
@@ -229,6 +271,18 @@ public class GlobalListener implements Listener {
         {
             e.setCancelled(true);
             return;
+        }
+    }
+
+    private static final List<CreatureSpawnEvent.SpawnReason> blockedreasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.NATURAL, CreatureSpawnEvent.SpawnReason.REINFORCEMENTS, CreatureSpawnEvent.SpawnReason.DEFAULT);
+
+    //Block mobs from spawning naturally
+    @EventHandler
+    public void onMobSpawn(CreatureSpawnEvent e)
+    {
+        if(blockedreasons.contains(e.getSpawnReason()))
+        {
+            e.setCancelled(true);
         }
     }
 }

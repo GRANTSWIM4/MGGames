@@ -1,5 +1,6 @@
 package com.minegusta.mggames.gametype;
 
+import com.minegusta.mggames.config.ConfigValues;
 import com.minegusta.mggames.game.*;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.tasks.FlagTask;

@@ -6,6 +6,8 @@ import com.minegusta.mggames.game.StopReason;
 import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.tasks.ClockTask;
+import com.minegusta.mggames.tasks.SaveTask;
+import com.minegusta.mggames.tasks.ShopTask;
 import com.minegusta.mggames.tasks.TeamPotionTask;
 import com.minegusta.mggames.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
@@ -34,7 +36,9 @@ public class Main extends JavaPlugin {
         getCommand("leave").setExecutor(new LeaveCommand());
         getCommand("gamereload").setExecutor(new ReloadCommand());
         getCommand("kit").setExecutor(new KitCommand());
+        getCommand("tickets").setExecutor(new TicketCommand());
         getCommand("world").setExecutor(new LoadWorldCommand());
+        getCommand("rewards").setExecutor(new RewardCommand());
 
         //Listeners
         for(Listener l : Listener.values())
@@ -51,6 +55,8 @@ public class Main extends JavaPlugin {
         //Tasks
         ClockTask.start();
         TeamPotionTask.start();
+        SaveTask.start();
+        ShopTask.start();
 
         //Set the scoreboard
         ScoreboardUtil.setBoard();
@@ -67,9 +73,13 @@ public class Main extends JavaPlugin {
             game.onStop(StopReason.RELOAD);
         });
 
+        SaveTask.save();
+
         //Stop tasks
         ClockTask.stop();
         TeamPotionTask.stop();
+        SaveTask.stop();
+        ShopTask.stop();
 
     }
 

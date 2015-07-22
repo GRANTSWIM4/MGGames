@@ -1,6 +1,7 @@
 package com.minegusta.mggames.register;
 
 import com.google.common.collect.Maps;
+import com.minegusta.mggames.config.ConfigManager;
 import com.minegusta.mggames.game.AbstractGame;
 import com.minegusta.mggames.player.MGPlayer;
 import org.bukkit.entity.Player;
@@ -30,7 +31,7 @@ public class Register
 
     public static void registerPlayer(Player p)
     {
-        players.put(p.getUniqueId().toString(), new MGPlayer(p));
+        players.put(p.getUniqueId().toString(), new MGPlayer(p, ConfigManager.loadPlayerFile(p)));
     }
 
     public static void removePlayer(String uuid)

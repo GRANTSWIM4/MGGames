@@ -2,6 +2,7 @@ package com.minegusta.mggames.game;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.minegusta.mggames.config.ConfigValues;
 import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.player.MGPlayer;
@@ -223,7 +224,7 @@ public abstract class AbstractGame {
         mgp.getTeam().removePlayer(mgp);
         mgp.setTeam(null);
         mgp.getPlayer().setGameMode(GameMode.SURVIVAL);
-        ScoreboardUtil.removeScoreBoard(mgp.getPlayer());
+        ScoreboardUtil.setHubBoard(mgp.getPlayer());
 
         mgp.getPlayer().getActivePotionEffects().stream().forEach(e ->
         {

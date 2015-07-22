@@ -3,6 +3,7 @@ package com.minegusta.mggames.config;
 import com.minegusta.mggames.game.GameTypes;
 import com.minegusta.mggames.main.Main;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 public class ConfigManager
 {
@@ -50,5 +51,15 @@ public class ConfigManager
     public static FileConfiguration getDefaultConfig()
     {
         return Main.getPlugin().getConfig();
+    }
+
+    public static FileConfiguration loadPlayerFile(Player p)
+    {
+        return YamlUtil.getConfiguration("/players/", p.getUniqueId().toString() + ".yml");
+    }
+
+    public static void savePlayerFile(Player p, FileConfiguration f)
+    {
+        YamlUtil.saveFile("/players/", p.getUniqueId().toString(), f);
     }
 }

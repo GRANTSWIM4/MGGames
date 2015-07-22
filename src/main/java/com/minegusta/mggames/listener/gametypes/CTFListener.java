@@ -49,42 +49,6 @@ public class CTFListener implements Listener
         e.setCancelled(true);
     }
 
-    //block team damage in ctf
-    @EventHandler
-    public void onTeamDamage(EntityDamageByEntityEvent e)
-    {
-        if(e.getDamager() instanceof Player && e.getEntity() instanceof Player)
-        {
-            Player damager = (Player) e.getDamager();
-            Player victim = (Player) e.getEntity();
-            MGPlayer damagerMGP = Register.getPlayer(damager);
-            MGPlayer victimMGP = Register.getPlayer(victim);
-
-            if(damagerMGP.getSession() == null || damagerMGP.getSession().getGameType() != GameTypes.CTF || victimMGP.getSession() == null || victimMGP.getSession().getGameType() != GameTypes.CTF) return;
-
-            if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
-            {
-                e.setCancelled(true);
-                return;
-            }
-        }
-        else if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player && e.getEntity() instanceof Player)
-        {
-            Player damager = (Player) ((Arrow) e.getDamager()).getShooter();
-            Player victim = (Player) e.getEntity();
-            MGPlayer damagerMGP = Register.getPlayer(damager);
-            MGPlayer victimMGP = Register.getPlayer(victim);
-
-            if(damagerMGP.getSession() == null || damagerMGP.getSession().getGameType() != GameTypes.CTF || victimMGP.getSession() == null || victimMGP.getSession().getGameType() != GameTypes.CTF) return;
-
-            if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
-            {
-                e.setCancelled(true);
-                return;
-            }
-        }
-    }
-
     //Listen for block hit and flag score
     @EventHandler
     public void onFlagHit(PlayerInteractEvent e)

@@ -2,8 +2,7 @@ package com.minegusta.mggames.command;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mggames.config.ConfigManager;
-import com.minegusta.mggames.game.AbstractGame;
-import com.minegusta.mggames.game.ConfigValues;
+import com.minegusta.mggames.config.ConfigValues;
 import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;

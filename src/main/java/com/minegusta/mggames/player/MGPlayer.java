@@ -1,16 +1,23 @@
 package com.minegusta.mggames.player;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mggames.config.ConfigManager;
+import com.minegusta.mggames.config.ConfigValues;
 import com.minegusta.mggames.game.AbstractGame;
 import com.minegusta.mggames.game.Team;
 import com.minegusta.mggames.kits.Kit;
+import com.minegusta.mggames.rewards.Unlockable;
+import com.minegusta.mggames.util.ChatUtil;
+import com.minegusta.mggames.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
 import java.util.UUID;
 
 public class MGPlayer {
@@ -29,14 +36,29 @@ public class MGPlayer {
     private int kills = 0;
     private int deaths = 0;
     private AbstractGame session;
+    private FileConfiguration conf;
     private Team team;
     private Kit kit;
+    private int tickets;
+    private List<Unlockable> activeUnlockables = Lists.newArrayList();
+    private List<Unlockable> unlockables = Lists.newArrayList();
     private String uuid;
 
-    public MGPlayer(Player p) {
+    public MGPlayer(Player p, FileConfiguration f) {
         this.session = null;
         this.team = null;
         this.kit = null;
+        this.conf = f;
+        this.tickets = conf.getInt(ConfigValues.TICKETS.getPath(), 0);
+        if(conf.isSet(ConfigValues.UNLOCKABLES.getPath()))
+        {
+            for(String s : conf.getStringList(ConfigValues.UNLOCKABLES.getPath()))
+            {
+                try {
+                    unlockables.add(Unlockable.valueOf(s));
+                } catch (Exception ignored){}
+            }
+        }
         this.uuid = p.getUniqueId().toString();
     }
 
@@ -60,6 +82,57 @@ public class MGPlayer {
     {
         this.kit = kit;
         kit.apply(getPlayer());
+    }
+
+    public int getTickets()
+    {
+        return tickets;
+    }
+
+    public void setTickets(int tickets)
+    {
+        this.tickets = tickets;
+    }
+
+    public void addTickets(int added)
+    {
+        ChatUtil.sendGameMessage(getPlayer(), ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.DARK_PURPLE + added + ChatColor.LIGHT_PURPLE + " tickets!");
+        this.tickets = tickets + added;
+    }
+
+    public boolean removeTickets(int removed)
+    {
+        if(tickets - removed >= 0)
+        {
+            tickets = tickets - removed;
+            return true;
+        }
+        return false;
+    }
+
+    public void addUnlockable(Unlockable u)
+    {
+        unlockables.add(u);
+    }
+
+    public boolean hasUnlockable(Unlockable u)
+    {
+        return unlockables.contains(u);
+    }
+
+    public List<Unlockable> getUnlockables()
+    {
+        return unlockables;
+    }
+
+    public List<Unlockable> getActiveUnlockables()
+    {
+        return activeUnlockables;
+    }
+
+    public void removeUnlockable(Unlockable u)
+    {
+        if(hasUnlockable(u))unlockables.remove(u);
     }
 
     public void setSession(AbstractGame game)
@@ -109,6 +182,24 @@ public class MGPlayer {
         getPlayer().updateInventory();
     }
 
+    public void clearActiveUnlockables()
+    {
+        ChatUtil.sendGameMessage(getPlayer(), "You disabled all active unlockables!");
+        activeUnlockables.clear();
+    }
+
+    public void removeActiveUnlockable(Unlockable remove)
+    {
+        ChatUtil.sendGameMessage(getPlayer(), remove.getName() + " is now no longer activated!");
+        if(activeUnlockables.contains(remove))activeUnlockables.add(remove);
+    }
+
+    public void addActiveUnlockable(Unlockable added)
+    {
+        ChatUtil.sendGameMessage(getPlayer(), added.getName() + " is now active!");
+        activeUnlockables.add(added);
+    }
+
     public void purgeStats()
     {
         this.session = null;
@@ -117,6 +208,7 @@ public class MGPlayer {
         this.deaths = 0;
         this.kit = null;
         this.kills = 0;
+        ScoreboardUtil.setHubBoard(getPlayer());
 
         clearPotions();
     }
@@ -127,5 +219,18 @@ public class MGPlayer {
         {
             getPlayer().removePotionEffect(e.getType());
         });
+    }
+
+    private void updateConfig()
+    {
+        conf.set(ConfigValues.UNLOCKABLES.getPath(), unlockables);
+        conf.set(ConfigValues.TICKETS.getPath(), tickets);
+    }
+
+    public void saveConfig()
+    {
+        updateConfig();
+        ConfigManager.savePlayerFile(getPlayer(), conf);
+
     }
 }

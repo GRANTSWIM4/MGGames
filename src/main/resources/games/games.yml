@@ -16,6 +16,7 @@
 #   lobby:
 #   winner-commands:
 #    - 'addcredits %name% 10'
+#    - 'tickets add %name% 5'
 #   tie-commands:
 #    - ''
 #   loser-commands:

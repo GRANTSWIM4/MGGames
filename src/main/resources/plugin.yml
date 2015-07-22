@@ -15,6 +15,7 @@ commands:
    leave:
       usage: /Leave
       description: Leave your current game.
+      aliases: [exit, quit, hub, abort, screwyouguysimgoinghome]
    gamereload:
       usage: /gamereload
       description: Reload all games, effectively pissing everyone off.
@@ -24,3 +25,11 @@ commands:
    world:
       usage: /world <list/load/unload/teleport> [worldname]
       description: Load/Unload and teleport to worlds.
+   tickets:
+      usage: /tickets
+      description: Look at all these tickets!
+      aliases: [ticket, points, point, score]
+   rewards:
+      usage: /rewards
+      description: See your unlocked rewards.
+      aliases: [reward, perks, perk, menu, unlocked, unlocks]

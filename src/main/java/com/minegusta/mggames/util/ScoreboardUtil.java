@@ -1,6 +1,7 @@
 package com.minegusta.mggames.util;
 
 import com.minegusta.mggames.game.TeamType;
+import com.minegusta.mggames.register.Register;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -31,7 +32,17 @@ public class ScoreboardUtil {
         p.setScoreboard(board);
     }
 
-    public static void removeScoreBoard(Player p) {
-        p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+    public static void setHubBoard(Player p)
+    {
+        Scoreboard hubBoard = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective hubObjective = board.registerNewObjective("tickets", "dummy");
+        hubObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        hubObjective.setDisplayName(ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG");
+        Team hubTeam = hubBoard.registerNewTeam("hub");
+        hubTeam.addPlayer(p);
+        Score score = hubObjective.getScore(ChatColor.YELLOW + "Tickets");
+        score.setScore(Register.getPlayer(p).getTickets());
+
+        p.setScoreboard(hubBoard);
     }
 }
