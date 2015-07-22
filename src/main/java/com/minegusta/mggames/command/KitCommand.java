@@ -92,8 +92,7 @@ public class KitCommand implements CommandExecutor{
                     });
             effects.stream().forEach(effect ->
             {
-                ConfigurationSection section = f.getConfigurationSection(kitName + "." + "potion-effects");
-                section.set(effect.getType().getName(), effect.getAmplifier());
+                f.set(kitName + "." + "potion-effects." + effect.getType().getName(), effect.getAmplifier());
             });
 
 
