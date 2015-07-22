@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class KitCommand implements CommandExecutor{
@@ -54,7 +55,7 @@ public class KitCommand implements CommandExecutor{
             List<PotionEffect> effects = Lists.newArrayList();
             List<MGItem> items = Lists.newArrayList();
 
-            for(int i = 0; i < p.getInventory().getSize(); i++)
+            for(int i = 0; i < p.getInventory().getContents().length; i++)
             {
                 ItemStack pick = p.getInventory().getItem(i);
                 if(pick != null && pick.getType() != Material.AIR)
@@ -64,7 +65,8 @@ public class KitCommand implements CommandExecutor{
 
                     try
                     {
-                        name = pick.getItemMeta().getDisplayName();
+                        String nameNew = pick.getItemMeta().getDisplayName();
+                        if(nameNew != null) name = nameNew;
                         lore = pick.getItemMeta().getLore().get(0);
                     } catch (Exception ignored){}
 
