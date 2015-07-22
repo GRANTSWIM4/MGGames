@@ -5,6 +5,7 @@ import com.minegusta.mggames.config.ConfigManager;
 import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.kits.MGItem;
 import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -81,14 +82,11 @@ public class KitCommand implements CommandExecutor{
             //Add the entries
             items.stream().forEach(i ->
                     {
-
-                        ConfigurationSection section = f.getConfigurationSection(kitName + "." + i.getName());
-
-                        section.set("amount", i.getAmount());
-                        section.set("slot", i.getSlot());
-                        section.set("material", i.getMaterial());
-                        section.set("lore", i.getLore());
-                        section.set("data", i.getData());
+                        f.set(kitName + "." + i.getName() + ".amount", i.getAmount());
+                        f.set(kitName + "." + i.getName() + ".slot", i.getSlot());
+                        f.set(kitName + "." + i.getName() + ".material", i.getMaterial());
+                        f.set(kitName + "." + i.getName() + ".lore", i.getLore());
+                        f.set(kitName + "." + i.getName() + ".data", i.getData());
                     });
             effects.stream().forEach(effect ->
             {
