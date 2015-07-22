@@ -22,9 +22,9 @@ public class ReloadCommand implements CommandExecutor
             game.onStop(StopReason.RELOAD);
         });
 
-        ConfigManager.loadSessions();
         KitRegistry.loadKits();
 
+        ConfigManager.loadSessions();
         return true;
     }
 }

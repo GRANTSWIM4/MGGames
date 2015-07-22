@@ -75,24 +75,10 @@ public class KitCommand implements CommandExecutor{
                 }
             }
 
-            for(int i = 100; i < 104; i++)
-            {
-                ItemStack pick = p.getInventory().getItem(i);
-                if(pick != null && pick.getType() != Material.AIR)
-                {
-                    String name = pick.getType().name();
-                    String lore = "";
-
-                    try
-                    {
-                        String nameNew = pick.getItemMeta().getDisplayName();
-                        if(nameNew != null) name = nameNew;
-                        lore = pick.getItemMeta().getLore().get(0);
-                    } catch (Exception ignored){}
-
-                    items.add(new MGItem(name, i, pick.getType(), pick.getAmount(), pick.getDurability(), lore));
-                }
-            }
+            items.add(new MGItem(p.getInventory().getHelmet().getType().name(), 103, p.getInventory().getHelmet().getType(), 1, p.getInventory().getHelmet().getDurability(), ""));
+            items.add(new MGItem(p.getInventory().getBoots().getType().name(), 100, p.getInventory().getBoots().getType(), 1, p.getInventory().getBoots().getDurability(), ""));
+            items.add(new MGItem(p.getInventory().getChestplate().getType().name(), 102, p.getInventory().getChestplate().getType(), 1, p.getInventory().getChestplate().getDurability(), ""));
+            items.add(new MGItem(p.getInventory().getLeggings().getType().name(), 101, p.getInventory().getLeggings().getType(), 1, p.getInventory().getLeggings().getDurability(), ""));
 
             effects.addAll(p.getActivePotionEffects().stream().collect(Collectors.toList()));
 

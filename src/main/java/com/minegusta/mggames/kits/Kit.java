@@ -1,5 +1,6 @@
 package com.minegusta.mggames.kits;
 
+import com.minegusta.mggames.register.Register;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,6 +39,8 @@ public class Kit
         }
 
         p.updateInventory();
+
+        Register.getPlayer(p).clearPotions();
 
         applyEffects(p);
     }

@@ -42,11 +42,11 @@ public class Main extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(l.getListener(), this);
         }
 
-        //Loading all the game sessions
-        ConfigManager.loadSessions();
-
         //Load all kits
         KitRegistry.loadKits();
+
+        //Loading all the game sessions
+        ConfigManager.loadSessions();
 
         //Tasks
         ClockTask.start();
