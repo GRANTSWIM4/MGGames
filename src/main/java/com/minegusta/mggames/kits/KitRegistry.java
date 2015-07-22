@@ -38,7 +38,7 @@ public class KitRegistry {
     {
         FileConfiguration f = ConfigManager.getKitFile();
 
-       f.getKeys(false).stream().forEach(kit ->
+        f.getKeys(false).stream().forEach(kit ->
         {
 
             List<MGItem> items = Lists.newArrayList();
@@ -48,7 +48,7 @@ public class KitRegistry {
             {
                 if (item.equalsIgnoreCase("potion-effects"))
                 {
-                    f.getConfigurationSection(item).getKeys(false).stream().forEach(effect ->
+                    f.getConfigurationSection(kit + "." + item).getKeys(false).stream().forEach(effect ->
                     {
                         int amplifier = f.getInt(kit + "." + item + "." + effect, 0);
                         PotionEffectType type;
