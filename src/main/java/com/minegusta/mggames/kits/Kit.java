@@ -31,7 +31,7 @@ public class Kit
     {
         for(int i = 0; i < p.getInventory().getContents().length; i++)
         {
-            p.getInventory().getItem(i).setType(Material.AIR);
+            if(p.getInventory().getItem(i) != null) p.getInventory().getItem(i).setType(Material.AIR);
         }
 
         for(MGItem i : items)

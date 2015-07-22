@@ -86,7 +86,7 @@ public class MGPlayer {
     {
         for(int i = 0; i < getPlayer().getInventory().getContents().length; i++)
         {
-            getPlayer().getInventory().getItem(i).setType(Material.AIR);
+            if(getPlayer().getInventory().getItem(i) != null) getPlayer().getInventory().getItem(i).setType(Material.AIR);
         }
     }
 
