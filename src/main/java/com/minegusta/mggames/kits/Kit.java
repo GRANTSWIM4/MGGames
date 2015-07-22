@@ -29,15 +29,15 @@ public class Kit
 
     public void apply(Player p)
     {
-        for(int i = 0; i < p.getInventory().getContents().length; i++)
-        {
-            if(p.getInventory().getItem(i) != null) p.getInventory().getItem(i).setType(Material.AIR);
-        }
+        p.getInventory().setContents(new ItemStack[]{null});
+        p.getInventory().setArmorContents(new ItemStack[]{null});
 
         for(MGItem i : items)
         {
             p.getInventory().setItem(i.getSlot(), i.buildItem());
         }
+
+        p.updateInventory();
 
         applyEffects(p);
     }

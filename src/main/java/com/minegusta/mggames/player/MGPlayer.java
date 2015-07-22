@@ -6,6 +6,7 @@ import com.minegusta.mggames.kits.Kit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -84,10 +85,9 @@ public class MGPlayer {
 
     public void clearInventory()
     {
-        for(int i = 0; i < getPlayer().getInventory().getContents().length; i++)
-        {
-            if(getPlayer().getInventory().getItem(i) != null) getPlayer().getInventory().getItem(i).setType(Material.AIR);
-        }
+        getPlayer().getInventory().setContents(new ItemStack[]{null});
+        getPlayer().getInventory().setArmorContents(new ItemStack[]{null});
+        getPlayer().updateInventory();
     }
 
     public void purgeStats()
