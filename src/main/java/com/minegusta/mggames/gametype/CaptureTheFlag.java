@@ -196,7 +196,7 @@ public class CaptureTheFlag extends AbstractGame
 
         super.onPlayerLeave(mgp);
 
-        if(getTeams().stream().anyMatch(team -> team.getPlayers().isEmpty()))
+        if(getStage() != Stage.LOBBY && getTeams().stream().anyMatch(team -> team.getPlayers().isEmpty()))
         {
             onStop(StopReason.WINNER);
         }
