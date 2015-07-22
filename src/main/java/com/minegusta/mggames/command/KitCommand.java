@@ -6,6 +6,7 @@ import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.kits.MGItem;
 import com.minegusta.mggames.util.ChatUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -82,11 +83,12 @@ public class KitCommand implements CommandExecutor{
             //Add the entries
             items.stream().forEach(i ->
                     {
-                        f.set(kitName + "." + i.getName() + ".amount", i.getAmount());
-                        f.set(kitName + "." + i.getName() + ".slot", i.getSlot());
-                        f.set(kitName + "." + i.getName() + ".material", i.getMaterial().name());
-                        f.set(kitName + "." + i.getName() + ".lore", i.getLore());
-                        f.set(kitName + "." + i.getName() + ".data", i.getData());
+                        String name = ChatColor.stripColor(i.getName());
+                        f.set(kitName + "." + name + ".amount", i.getAmount());
+                        f.set(kitName + "." + name + ".slot", i.getSlot());
+                        f.set(kitName + "." + name + ".material", ChatColor.stripColor(i.getMaterial().name()));
+                        f.set(kitName + "." + name + ".lore", ChatColor.stripColor(i.getLore()));
+                        f.set(kitName + "." + name + ".data", i.getData());
                     });
             effects.stream().forEach(effect ->
             {
