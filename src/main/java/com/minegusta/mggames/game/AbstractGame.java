@@ -361,18 +361,21 @@ public abstract class AbstractGame {
             team.setSpawn(null);
         });
 
-        for(Player p : getWorld().getPlayers())
+        if(getWorld() != null)
         {
-            p.teleport(Main.getHub().getSpawnLocation());
+            for(Player p : getWorld().getPlayers())
+            {
+                p.teleport(Main.getHub().getSpawnLocation());
+            }
+
+            //unload the played world
+            WorldManager.unLoadWorld(world);
         }
 
         for(Player p : Main.getHub().getPlayers())
         {
             ChatUtil.sendFormattedMessage(p, ChatColor.YELLOW + name + " has ended!");
         }
-
-        //unload the played world
-        WorldManager.unLoadWorld(world);
 
         //clear the data
         voted.clear();
