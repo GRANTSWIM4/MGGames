@@ -199,7 +199,7 @@ public abstract class AbstractGame {
 
     public void setTeam(MGPlayer mgp, Team team)
     {
-        ChatUtil.sendFormattedMessage(mgp.getPlayer(), "You joined team " + team.getType().name() + ".");
+        ChatUtil.sendGameMessage(mgp.getPlayer(), "You joined team " + team.getType().name() + ".");
         removeFromTeam(mgp);
         mgp.setTeam(team);
         team.addPlayer(mgp);
@@ -240,6 +240,7 @@ public abstract class AbstractGame {
     {
         players.put(mgp.getUniqueIdAsString(), mgp);
         mgp.purgeStats();
+        mgp.clearInventory();
         setTeam(mgp);
         mgp.setSession(this);
         if(!getAvailableKits().isEmpty())mgp.setKit(KitRegistry.getKit(availableKits.get(0)));
@@ -291,6 +292,7 @@ public abstract class AbstractGame {
         }
         removeFromTeam(mgp);
         mgp.purgeStats();
+        mgp.clearInventory();
         mgp.getPlayer().setGameMode(GameMode.SURVIVAL);
         mgp.getPlayer().teleport(Main.getHub().getSpawnLocation());
     }

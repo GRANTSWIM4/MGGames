@@ -206,7 +206,7 @@ public class CaptureTheFlag extends AbstractGame
     public void onPlayerJoin(MGPlayer mgp)
     {
         //Send messages and stuff
-        ChatUtil.sendFormattedMessage(mgp.getPlayer(), "You joined Capture The Flag!");
+        ChatUtil.sendGameMessage(mgp.getPlayer(), "You joined Capture The Flag!");
 
         super.onPlayerJoin(mgp);
     }

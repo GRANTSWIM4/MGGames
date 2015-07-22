@@ -4,6 +4,7 @@ import com.minegusta.mggames.game.AbstractGame;
 import com.minegusta.mggames.game.Team;
 import com.minegusta.mggames.kits.Kit;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -79,6 +80,14 @@ public class MGPlayer {
     public Kit getKit()
     {
         return kit;
+    }
+
+    public void clearInventory()
+    {
+        for(int i = 0; i < getPlayer().getInventory().getContents().length; i++)
+        {
+            getPlayer().getInventory().getItem(i).setType(Material.AIR);
+        }
     }
 
     public void purgeStats()
