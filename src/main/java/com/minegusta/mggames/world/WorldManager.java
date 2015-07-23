@@ -17,6 +17,11 @@ public class WorldManager
         return false;
     }
 
+    public static boolean isLoaded(String world)
+    {
+        return Bukkit.getWorlds().stream().anyMatch(w -> w.getName().equals(world));
+    }
+
     public static boolean unLoadWorld(String world, boolean save)
     {
         return Bukkit.unloadWorld(world, save);

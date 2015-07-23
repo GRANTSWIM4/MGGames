@@ -345,7 +345,7 @@ public abstract class AbstractGame {
 
     public void loadWorld()
     {
-        if(world == null || !WorldManager.worldExists(world))
+        if(world == null || !WorldManager.worldExists(world) || WorldManager.isLoaded(world))
         {
             onStop(StopReason.WORLD_ERROR);
             return;
