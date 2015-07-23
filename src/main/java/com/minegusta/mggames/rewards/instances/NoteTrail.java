@@ -11,7 +11,7 @@ import org.bukkit.event.Event;
 public class NoteTrail implements UnlockableItem {
     @Override
     public void apply(Player p) {
-        p.getWorld().spigot().playEffect(p.getLocation(), Effect.NOTE, 0, 0, 1, 0.4F, 1, 1/5, 15, 25);
+        p.getWorld().spigot().playEffect(p.getLocation(), Effect.NOTE, 0, 0, 0.5F, 0.4F, 0.5F, 1/5, 15, 25);
 
     }
 
