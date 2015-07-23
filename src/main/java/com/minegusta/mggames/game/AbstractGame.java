@@ -458,6 +458,8 @@ public abstract class AbstractGame {
         }
         world = chosen;
 
+        loadWorld();
+
         addLocations(f);
     }
 
