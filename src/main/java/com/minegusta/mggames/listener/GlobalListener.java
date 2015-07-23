@@ -63,6 +63,8 @@ public class GlobalListener implements Listener {
             e.getPlayer().teleport(Main.getHub().getSpawnLocation());
         }
 
+        mgp.saveConfig();
+
         Register.removePlayer(e.getPlayer().getUniqueId().toString());
     }
 
