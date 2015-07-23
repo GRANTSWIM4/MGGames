@@ -37,6 +37,8 @@ public class CaptureTheFlag extends AbstractGame
     public AbstractGame insertData(ConfigurationSection f)
     {
         flagLives = f.getInt(ConfigValues.FLAG_LIVES.getPath(), 3);
+        teamBlueLives = flagLives;
+        teamRedLives = flagLives;
 
         super.insertData(f);
         return this;
@@ -92,12 +94,12 @@ public class CaptureTheFlag extends AbstractGame
             teamRedLives--;
         }
 
-        checkifEnd();
-
         getPlayers().stream().forEach(p ->
         {
             ChatUtil.sendFormattedMessage(p.getPlayer(), mgp.getPlayer().getName() + team.getColor() + " scored a point for team " + team.name() + "!");
         });
+
+        checkifEnd();
     }
 
     private void checkifEnd()
