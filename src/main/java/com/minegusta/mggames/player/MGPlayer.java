@@ -245,7 +245,9 @@ public class MGPlayer {
 
     private void updateConfig()
     {
-        conf.set(ConfigValues.UNLOCKABLES.getPath(), unlockables);
+        List<String> unlockablesNames = Lists.newArrayList();
+        unlockables.stream().forEach(u -> unlockablesNames.add(u.name()));
+        conf.set(ConfigValues.UNLOCKABLES.getPath(), unlockablesNames);
         conf.set(ConfigValues.TICKETS.getPath(), tickets);
         conf.set(ConfigValues.AVAILABLE_KITS.getPath(), kits);
     }
