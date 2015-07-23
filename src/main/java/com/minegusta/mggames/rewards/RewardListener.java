@@ -35,7 +35,6 @@ public class RewardListener implements Listener
         //Check for clear all
         if(name.equals(RewardMenu.clear.getItemMeta().getDisplayName()))
         {
-
             mgp.clearActiveUnlockables();
             p.closeInventory();
             RewardMenu.openRewardMenu(p);

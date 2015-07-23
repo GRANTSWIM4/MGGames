@@ -1,9 +1,13 @@
 package com.minegusta.mggames.rewards;
 
+import com.minegusta.mggames.kits.Kit;
+import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.tasks.ShopTask;
 import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -18,23 +22,55 @@ public class ShopListener implements Listener{
 
     //Block clicks in the inventory and apply the buying
     @EventHandler
-    public void onBuy(InventoryClickEvent e)
-    {
-        if(!(e.getWhoClicked() instanceof Player))return;
+    public void onBuy(InventoryClickEvent e) {
+        if (!(e.getWhoClicked() instanceof Player)) return;
 
         Player p = (Player) e.getWhoClicked();
 
-        if(e.getClickedInventory() == null || !ShopTask.contains(e.getClickedInventory()))return;
+        if (e.getClickedInventory() == null || !ShopTask.contains(e.getClickedInventory())) return;
 
         e.setCancelled(true);
 
-        if(e.getCurrentItem() == null) return;
+        if (e.getCurrentItem() == null) return;
 
         ItemStack clicked = e.getCurrentItem();
-        Inventory inv = e.getInventory();
         Unlockable reward = null;
         MGPlayer mgp = Register.getPlayer(p);
 
+        //Detect tab switching
+        if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.kitShopTab.getItemMeta().getDisplayName()))
+        {
+            p.closeInventory();
+            ShopMenu.openKitShop(p);
+            return;
+        }
+        if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.unlockableShopTab.getItemMeta().getDisplayName()))
+        {
+            p.closeInventory();
+            ShopMenu.openShop(p);
+            return;
+        }
+
+        //Check for kits
+        if(clicked.getType() == Material.TRAPPED_CHEST && clicked.hasItemMeta() && KitRegistry.exists(ChatColor.stripColor(clicked.getItemMeta().getDisplayName())))
+        {
+            Kit kit = KitRegistry.getKit(ChatColor.stripColor(clicked.getItemMeta().getDisplayName()));
+            int cost = kit.getCost();
+
+
+            if(!mgp.removeTickets(cost))
+            {
+                ChatUtil.sendFormattedMessage(p, "You cannot afford that item!");
+                return;
+            }
+            mgp.addKit(kit.getName());
+            p.closeInventory();
+            ChatUtil.sendFormattedMessage(p, "You bought kit " + kit.getName() + "!");
+            return;
+        }
+
+
+        //Check for the unlockables
         for(Unlockable u : Unlockable.values())
         {
             ItemStack stack = u.buildShopItem();

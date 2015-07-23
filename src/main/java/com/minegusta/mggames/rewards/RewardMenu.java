@@ -1,6 +1,8 @@
 package com.minegusta.mggames.rewards;
 
 import com.google.common.collect.Lists;
+import com.minegusta.mggames.kits.Kit;
+import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
@@ -40,6 +42,7 @@ public class RewardMenu
         int slot = 0;
         for(Unlockable u : mgp.getUnlockables())
         {
+            if(u.getType() != UnlockableType.TOGGLE) continue;
             boolean active = mgp.getActiveUnlockables().contains(u);
             inv.setItem(slot, u.buildUnlockedItem(active));
             slot++;

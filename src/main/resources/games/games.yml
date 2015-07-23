@@ -12,6 +12,8 @@
 #   name: 'name'
 #   break-blocks: false
 #   build-blocks: false
+#   force-kit: true
+#   default-kit: 'Warrior'
 #   respawn-with-kit: true
 #   lobby:
 #   winner-commands:
@@ -23,8 +25,5 @@
 #    - ''
 #   min-players: 26
 #   flag-lives: 3
-#   kits:
-#    - WARRIOR
-#    - TANK
 #   max-players: 2
 #   grace-time: 10

@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
@@ -35,6 +36,11 @@ public class KitRegistry {
         if(exists(name))kits.remove(name);
     }
 
+    public static Collection<Kit> getKits()
+    {
+        return kits.values();
+    }
+
     public static void loadKits()
     {
         FileConfiguration f = ConfigManager.getKitFile();
@@ -44,6 +50,8 @@ public class KitRegistry {
 
             List<MGItem> items = Lists.newArrayList();
             List<PotionEffect> effects = Lists.newArrayList();
+            boolean[] isDefault = new boolean[]{true};
+            int[] cost = new int[]{0};
 
             f.getConfigurationSection(kit).getKeys(false).forEach(slot ->
             {
@@ -62,6 +70,10 @@ public class KitRegistry {
                         PotionEffect potionEffect = new PotionEffect(type, 20 * 25, amplifier);
                         effects.add(potionEffect);
                     });
+                } else if (slot.equalsIgnoreCase("default")) {
+                    isDefault[0] = f.getBoolean(kit + "." + slot, false);
+                } else if (slot.equalsIgnoreCase("cost")) {
+                    cost[0] = f.getInt(kit + "." + slot, 0);
                 } else {
                     String lore = f.getString(kit + "." + slot + ".lore");
                     String name = f.getString(kit + "." + slot + ".name");
@@ -79,7 +91,7 @@ public class KitRegistry {
                 }
             });
 
-            register(kit, new Kit(kit, items, effects));
+            register(kit, new Kit(kit, items, effects, isDefault[0], cost[0]));
 
         });
     }

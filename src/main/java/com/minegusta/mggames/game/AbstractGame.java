@@ -31,13 +31,14 @@ public abstract class AbstractGame {
     private boolean breakBlocks;
     private int minPlayers;
     private boolean respawnWithKit;
+    private boolean forceKit;
+    private String defaultKit;
     private List<String> winnerCommands = Lists.newArrayList();
     private List<String> loserCommands = Lists.newArrayList();
     private List<String> tieCommands = Lists.newArrayList();
     private int maxPlayers;
     private boolean starting = false;
     private ConfigurationSection f;
-    private List<String> availableKits = Lists.newArrayList();
     private int graceTime;
     private int maxtime;
 
@@ -66,15 +67,11 @@ public abstract class AbstractGame {
         if(f.isSet(ConfigValues.LOSER_COMMANDS.getPath()))this.loserCommands = f.getStringList(ConfigValues.LOSER_COMMANDS.getPath());
         if(f.isSet(ConfigValues.TIE_COMMANDS.getPath()))this.tieCommands = f.getStringList(ConfigValues.TIE_COMMANDS.getPath());
 
-        f.getStringList(ConfigValues.AVAILABLE_KITS.getPath()).stream().forEach(string ->
-        {
-            if(KitRegistry.exists(string))
-            {
-                availableKits.add(string);
-            }
-        });
-
         respawnWithKit = f.getBoolean(ConfigValues.RESPAWN_WITH_KIT.getPath(), false);
+
+        forceKit = f.getBoolean(ConfigValues.FORCE_KIT.getPath(), false);
+
+        defaultKit = f.getString(ConfigValues.DEFAULT_KIT.getPath(), "Warrior");
 
         maxPlayers = f.getInt(ConfigValues.MAX_PLAYERS.getPath(), -1);
 
@@ -102,7 +99,13 @@ public abstract class AbstractGame {
 
     public abstract void onStart();
 
-    public abstract void onRespawn(MGPlayer mgp, String message);
+    public void onRespawn(MGPlayer mgp, String message)
+    {
+        if(respawnWithKit() && mgp.getKit() != null)
+        {
+            mgp.getKit().apply(mgp.getPlayer());
+        }
+    }
 
     public abstract void onDeath(MGPlayer mgp);
     
@@ -110,6 +113,16 @@ public abstract class AbstractGame {
     {
         getTeams().stream().forEach(team ->
                 rewardPlayers(team, team.getResult()));
+    }
+
+    public String getDefaultKit()
+    {
+        return defaultKit;
+    }
+
+    public boolean forceKit()
+    {
+        return forceKit;
     }
 
 
@@ -244,10 +257,12 @@ public abstract class AbstractGame {
         mgp.clearInventory();
         setTeam(mgp);
         mgp.setSession(this);
-        if(!getAvailableKits().isEmpty())
+
+        if(forceKit && KitRegistry.exists(getDefaultKit()))
         {
-            mgp.setKit(KitRegistry.getKit(availableKits.get(0)));
+            mgp.setKit(KitRegistry.getKit(getDefaultKit()));
         }
+
         mgp.getPlayer().teleport(lobby);
 
         if(getPlayers().size() >= getMaxPlayers() && !starting)
@@ -280,11 +295,6 @@ public abstract class AbstractGame {
     public boolean allowPlacing()
     {
         return buildBlocks;
-    }
-
-    public List<String> getAvailableKits()
-    {
-        return availableKits;
     }
 
     public void onPlayerLeave(MGPlayer mgp)

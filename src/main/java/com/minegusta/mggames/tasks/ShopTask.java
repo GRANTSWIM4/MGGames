@@ -2,7 +2,6 @@ package com.minegusta.mggames.tasks;
 
 import com.google.common.collect.Lists;
 import com.minegusta.mggames.main.Main;
-import com.minegusta.mggames.rewards.RewardMenu;
 import com.minegusta.mggames.rewards.ShopMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
@@ -16,7 +15,7 @@ public class ShopTask
 
     public static void start()
     {
-        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ShopTask::updateInvs,20*2,20*2);
+        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ShopTask::updateInvs,20*4,20*4);
     }
 
     public static void stop()

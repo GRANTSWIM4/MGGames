@@ -5,10 +5,7 @@ import com.minegusta.mggames.config.ConfigManager;
 import com.minegusta.mggames.game.StopReason;
 import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.register.Register;
-import com.minegusta.mggames.tasks.ClockTask;
-import com.minegusta.mggames.tasks.SaveTask;
-import com.minegusta.mggames.tasks.ShopTask;
-import com.minegusta.mggames.tasks.TeamPotionTask;
+import com.minegusta.mggames.tasks.*;
 import com.minegusta.mggames.util.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -56,6 +53,7 @@ public class Main extends JavaPlugin {
         ClockTask.start();
         TeamPotionTask.start();
         SaveTask.start();
+        RewardTask.start();
         ShopTask.start();
 
         //Set the scoreboard
@@ -78,6 +76,7 @@ public class Main extends JavaPlugin {
         //Stop tasks
         ClockTask.stop();
         TeamPotionTask.stop();
+        RewardTask.stop();
         SaveTask.stop();
         ShopTask.stop();
 

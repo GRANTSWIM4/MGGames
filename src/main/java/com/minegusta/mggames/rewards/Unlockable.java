@@ -1,84 +1,70 @@
 package com.minegusta.mggames.rewards;
 
-import com.google.common.collect.Lists;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import com.minegusta.mggames.rewards.instances.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.List;
 
 public enum Unlockable
 {
-    UNLOCKABLE_ITEM_1("name", Material.EMERALD_BLOCK, 0, 100, "lol");
+    FIRE_TRAIL(new FireTrail()),
+    SMOKE_TRAIL(new SmokeTrail()),
+    RAINBOW_TRAIL(new RainbowTrail()),
+    Note_TRAIL(new NoteTrail()),
+    ENDER_TRAIL(new EnderTrail()),
+    PURPLE_TRAIN(new PurpleTrail());
 
-    private String[] lore;
-    private String name;
-    private Material material;
-    private  int data;
-    private int tickets;
+    private UnlockableItem i;
 
-    Unlockable(String name, Material material, int data, int tickets, String... lore)
+    private Unlockable(UnlockableItem i)
     {
-        this.name = name;
-        this.material = material;
-        this.data = data;
-        this.tickets = tickets;
-        this.lore = lore;
+        this.i = i;
     }
 
     public ItemStack buildShopItem()
     {
-        return new ItemStack(material, 1, (byte)data)
-        {
-            {
-                ItemMeta meta = getItemMeta();
-                meta.setDisplayName(name());
-                List<String> loreList = Lists.newArrayList();
-
-                loreList.add(ChatColor.LIGHT_PURPLE + "Cost: " + ChatColor.LIGHT_PURPLE + getCost());
-
-                for(String s : lore)
-                {
-                    loreList.add(s);
-                }
-
-                setItemMeta(meta);
-            }
-        };
+        return i.buildShopItem();
     }
 
-    public ItemStack buildUnlockedItem(boolean active)
+    public ItemStack buildUnlockedItem(boolean enabled)
     {
-        return new ItemStack(material, 1, (byte)data)
-        {
-            {
-                ItemMeta meta = getItemMeta();
-                meta.setDisplayName(name());
-                List<String> loreList = Lists.newArrayList();
-                ChatColor color = ChatColor.DARK_RED;
-                if(active) color = ChatColor.DARK_GREEN;
-
-                loreList.add(ChatColor.LIGHT_PURPLE + "Active: " + color + "" + ChatColor.BOLD + Boolean.toString(active));
-
-                for(String s : lore)
-                {
-                    loreList.add(s);
-                }
-
-                setItemMeta(meta);
-            }
-        };
+        return i.buildUnlockedItem(enabled);
     }
 
     public String getName()
     {
-        return name();
+        return i.getName();
+    }
+
+    public UnlockableType getType()
+    {
+        return i.getType();
+    }
+
+    public int getData()
+    {
+        return i.getData();
+    }
+
+    public String[] getLore()
+    {
+        return i.getLore();
     }
 
     public int getCost()
     {
-        return tickets;
+        return i.getCost();
     }
+
+    public void apply(Player p)
+    {
+        i.apply(p);
+    }
+
+    public void apply(Event event)
+    {
+        i.apply(event);
+    }
+
+
 }

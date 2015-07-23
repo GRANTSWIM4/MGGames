@@ -20,6 +20,8 @@ public enum ConfigValues
     WINNER_COMMANDS("winner-commands"),
     LOSER_COMMANDS("loser-commands"),
     TIE_COMMANDS("tie-commands"),
+    FORCE_KIT("force-kit"),
+    DEFAULT_KIT("default-kit"),
     AVAILABLE_KITS("kits"),
     TICKETS("tickets"),
     UNLOCKABLES("unlockables"),

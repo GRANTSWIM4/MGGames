@@ -40,6 +40,7 @@ public class MGPlayer {
     private Team team;
     private Kit kit;
     private int tickets;
+    private List<String> kits = Lists.newArrayList();
     private List<Unlockable> activeUnlockables = Lists.newArrayList();
     private List<Unlockable> unlockables = Lists.newArrayList();
     private String uuid;
@@ -49,6 +50,7 @@ public class MGPlayer {
         this.team = null;
         this.kit = null;
         this.conf = f;
+        if(conf.isSet(ConfigValues.AVAILABLE_KITS.getPath()))this.kits = conf.getStringList(ConfigValues.AVAILABLE_KITS.getPath());
         this.tickets = conf.getInt(ConfigValues.TICKETS.getPath(), 0);
         if(conf.isSet(ConfigValues.UNLOCKABLES.getPath()))
         {
@@ -118,6 +120,26 @@ public class MGPlayer {
     public boolean hasUnlockable(Unlockable u)
     {
         return unlockables.contains(u);
+    }
+
+    public List<String> getKits()
+    {
+        return kits;
+    }
+
+    public void addKit(String kitName)
+    {
+        kits.add(kitName);
+    }
+
+    public boolean hasKit(String kit)
+    {
+        return kits.contains(kit);
+    }
+
+    public void removeKit(String kitname)
+    {
+        if(kits.contains(kitname))kits.remove(kitname);
     }
 
     public List<Unlockable> getUnlockables()
@@ -225,6 +247,7 @@ public class MGPlayer {
     {
         conf.set(ConfigValues.UNLOCKABLES.getPath(), unlockables);
         conf.set(ConfigValues.TICKETS.getPath(), tickets);
+        conf.set(ConfigValues.AVAILABLE_KITS.getPath(), kits);
     }
 
     public void saveConfig()

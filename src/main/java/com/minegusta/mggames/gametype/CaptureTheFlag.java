@@ -110,16 +110,15 @@ public class CaptureTheFlag extends AbstractGame
 
     @Override
     public void onRespawn(MGPlayer mgp, String message) {
+
         mgp.getPlayer().teleport(mgp.getTeam().getSpawn());
-        if(respawnWithKit())
-        {
-            mgp.getKit().apply(mgp.getPlayer());
-        }
 
         getPlayers().stream().forEach(p ->
         {
             ChatUtil.sendGameMessage(p.getPlayer(), message);
         });
+
+        super.onRespawn(mgp, message);
     }
 
     @Override

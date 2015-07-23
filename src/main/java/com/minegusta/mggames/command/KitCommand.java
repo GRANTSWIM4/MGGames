@@ -31,7 +31,7 @@ public class KitCommand implements CommandExecutor{
 
         if(args.length < 2)
         {
-            ChatUtil.sendFormattedMessage(p, "Use it like this:", "/kit add <name>", "/kit remove <name>");
+            ChatUtil.sendFormattedMessage(p, "Use it like this:", "/kit add <name> <booleanDefault> <cost>", "/kit remove <name>");
             return true;
         }
 
@@ -50,11 +50,30 @@ public class KitCommand implements CommandExecutor{
                 return true;
             }
         }
-        else if(args[0].equalsIgnoreCase("add"))
+
+        if(args.length < 4)
+        {
+            ChatUtil.sendFormattedMessage(p, "Use it like this:", "/kit add <name> <booleanDefault> <cost>", "/kit remove <name>");
+            return true;
+        }
+
+        if(args[0].equalsIgnoreCase("add"))
         {
             String kitName = args[1];
             List<PotionEffect> effects = Lists.newArrayList();
             List<MGItem> items = Lists.newArrayList();
+            boolean isDefault = true;
+            int cost = 0;
+
+            try
+            {
+                isDefault = Boolean.parseBoolean(args[2]);
+                cost = Integer.parseInt(args[3]);
+            }catch (Exception ignored)
+            {
+                ChatUtil.sendFormattedMessage(p, "Use it like this:", "/kit add <name> <booleanDefault> <cost>", "/kit remove <name>");
+                return true;
+            }
 
             for(int i = 0; i < p.getInventory().getContents().length; i++)
             {
@@ -95,9 +114,10 @@ public class KitCommand implements CommandExecutor{
                         f.set(kitName + "." + slot + ".lore", ChatColor.stripColor(i.getLore()));
                         f.set(kitName + "." + slot + ".data", i.getData());
                     });
-            effects.stream().forEach(effect ->
-                    f.set(kitName + "." + "potion-effects." + effect.getType().getName(), effect.getAmplifier()));
+            effects.stream().forEach(effect -> f.set(kitName + "." + "potion-effects." + effect.getType().getName(), effect.getAmplifier()));
 
+            f.set(kitName + ".cost", cost);
+            f.set(kitName + ".default", isDefault);
 
             ConfigManager.saveKitFile(f);
             KitRegistry.loadKits();
