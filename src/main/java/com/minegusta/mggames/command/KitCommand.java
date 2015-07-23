@@ -94,10 +94,10 @@ public class KitCommand implements CommandExecutor{
                 }
             }
 
-            items.add(new MGItem(p.getInventory().getHelmet().getType().name(), 103, p.getInventory().getHelmet().getType(), 1, p.getInventory().getHelmet().getDurability(), ""));
-            items.add(new MGItem(p.getInventory().getBoots().getType().name(), 100, p.getInventory().getBoots().getType(), 1, p.getInventory().getBoots().getDurability(), ""));
-            items.add(new MGItem(p.getInventory().getChestplate().getType().name(), 102, p.getInventory().getChestplate().getType(), 1, p.getInventory().getChestplate().getDurability(), ""));
-            items.add(new MGItem(p.getInventory().getLeggings().getType().name(), 101, p.getInventory().getLeggings().getType(), 1, p.getInventory().getLeggings().getDurability(), ""));
+            if(p.getInventory().getHelmet() != null)items.add(new MGItem(p.getInventory().getHelmet().getType().name(), 103, p.getInventory().getHelmet().getType(), 1, p.getInventory().getHelmet().getDurability(), ""));
+            if(p.getInventory().getBoots() != null)items.add(new MGItem(p.getInventory().getBoots().getType().name(), 100, p.getInventory().getBoots().getType(), 1, p.getInventory().getBoots().getDurability(), ""));
+            if(p.getInventory().getChestplate() != null)items.add(new MGItem(p.getInventory().getChestplate().getType().name(), 102, p.getInventory().getChestplate().getType(), 1, p.getInventory().getChestplate().getDurability(), ""));
+            if(p.getInventory().getLeggings() != null)items.add(new MGItem(p.getInventory().getLeggings().getType().name(), 101, p.getInventory().getLeggings().getType(), 1, p.getInventory().getLeggings().getDurability(), ""));
 
             effects.addAll(p.getActivePotionEffects().stream().collect(Collectors.toList()));
 
