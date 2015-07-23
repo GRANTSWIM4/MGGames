@@ -8,6 +8,7 @@ import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -55,7 +56,6 @@ public class CTFListener implements Listener
     @EventHandler
     public void onFlagHit(PlayerInteractEvent e)
     {
-        Bukkit.broadcastMessage("Running flag event...");
         if(!e.hasBlock())return;
 
         Player p = e.getPlayer();
@@ -64,41 +64,40 @@ public class CTFListener implements Listener
 
         if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF || mgp.getSession().getStage() != Stage.PLAYING)return;
 
-        Bukkit.broadcastMessage("CTF interact with block detected!");
-
         TeamType team = mgp.getTeam().getType();
 
         CaptureTheFlag ctf = (CaptureTheFlag) mgp.getSession();
 
-        Bukkit.broadcastMessage("blue taken: " + ctf.isBlueWoolTaken());
-        Bukkit.broadcastMessage("team interactor: " + team.name());
-        Bukkit.broadcastMessage("Wool block = clicked: " + Boolean.toString(ctf.getBlueWool().getBlock() == clicked));
-
         //Taking the blue wool
-        if(team == TeamType.RED && !ctf.isBlueWoolTaken() && ctf.getBlueWool().getBlock() == clicked)
+        if(team == TeamType.RED && !ctf.isBlueWoolTaken() && locationsMatch(ctf.getBlueWool(), clicked.getLocation()))
         {
             ctf.setBlueFlagCarrier(mgp);
             ctf.takeBlueWool(mgp);
         }
         //Taking the red wool
-        if(team == TeamType.BLUE && !ctf.isRedWoolTaken() && clicked == ctf.getRedWool().getBlock())
+        if(team == TeamType.BLUE && !ctf.isRedWoolTaken() && locationsMatch(clicked.getLocation(), ctf.getRedWool()))
         {
             ctf.setRedFlagCarrier(mgp);
             ctf.takeRedWool(mgp);
         }
 
         //Scoring a red point
-        if(team == TeamType.RED && !ctf.isRedWoolTaken() && ctf.isBlueWoolTaken() && clicked == ctf.getRedWool().getBlock() && ctf.getBlueFlagCarrier() == mgp)
+        if(team == TeamType.RED && !ctf.isRedWoolTaken() && ctf.isBlueWoolTaken() && locationsMatch(clicked.getLocation(), ctf.getRedWool()) && ctf.getBlueFlagCarrier() == mgp)
         {
             ctf.returnBlueWool();
             ctf.addScore(TeamType.RED, mgp);
         }
 
         //Scoring a blue point
-        if(team == TeamType.BLUE && !ctf.isBlueWoolTaken() && ctf.isRedWoolTaken() && clicked == ctf.getBlueWool().getBlock() && ctf.getRedFlagCarrier() == mgp)
+        if(team == TeamType.BLUE && !ctf.isBlueWoolTaken() && ctf.isRedWoolTaken() && locationsMatch(clicked.getLocation(), ctf.getBlueWool()) && ctf.getRedFlagCarrier() == mgp)
         {
             ctf.returnRedWool();
             ctf.addScore(TeamType.BLUE, mgp);
         }
+    }
+
+    private boolean locationsMatch(Location l1, Location l2)
+    {
+        return ((int) l1.getX() == (int) l2.getX()) && ((int) l1.getY() == (int) l2.getY()) && ((int) l1.getZ() == (int) l2.getZ()) && (l1.getWorld().getName().equals(l2.getWorld().getName()));
     }
 }
