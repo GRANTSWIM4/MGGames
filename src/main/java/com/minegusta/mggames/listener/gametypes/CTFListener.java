@@ -1,6 +1,7 @@
 package com.minegusta.mggames.listener.gametypes;
 
 import com.minegusta.mggames.game.GameTypes;
+import com.minegusta.mggames.game.Stage;
 import com.minegusta.mggames.game.TeamType;
 import com.minegusta.mggames.gametype.CaptureTheFlag;
 import com.minegusta.mggames.player.MGPlayer;
@@ -60,7 +61,7 @@ public class CTFListener implements Listener
         MGPlayer mgp = Register.getPlayer(p);
 
 
-        if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF)return;
+        if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF || mgp.getSession().getStage() != Stage.PLAYING)return;
 
         TeamType team = mgp.getTeam().getType();
 

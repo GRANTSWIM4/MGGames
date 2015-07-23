@@ -36,6 +36,24 @@ public class ShopMenu
         }
     };
 
+    private static ItemStack pane = new ItemStack(Material.STAINED_GLASS_PANE, 1)
+    {
+        {
+            ItemMeta meta = getItemMeta();
+            meta.setDisplayName("");
+            meta.setLore(Lists.newArrayList(""));
+            setItemMeta(meta);
+        }
+    };
+
+    public static ItemStack getPane(int data)
+    {
+        ItemStack stack = pane.clone();
+        stack.setDurability((byte) data);
+
+        return stack;
+    }
+
     public static void openShop(Player p)
     {
         //Create the inv
@@ -45,13 +63,13 @@ public class ShopMenu
 
         for(int i = 0; i < 9; i++)
         {
-            inv.setItem(i, new ItemStack(Material.STAINED_GLASS_PANE, 0, (short) i));
+            inv.setItem(i, getPane(i));
         }
 
         int data = 0;
         for(int i = 36; i < 45; i++)
         {
-            inv.setItem(i, new ItemStack(Material.STAINED_GLASS_PANE, 0, (short) data));
+            inv.setItem(i, getPane(data));
             data++;
         }
 
@@ -82,13 +100,13 @@ public class ShopMenu
 
         for(int i = 0; i < 9; i++)
         {
-            inv.setItem(i, new ItemStack(Material.STAINED_GLASS_PANE, 0, (short) i));
+            inv.setItem(i, getPane(i));
         }
 
         int data = 0;
         for(int i = 36; i < 45; i++)
         {
-            inv.setItem(i, new ItemStack(Material.STAINED_GLASS_PANE, 0, (short) data));
+            inv.setItem(i, getPane(data));
             data++;
         }
 
@@ -116,7 +134,8 @@ public class ShopMenu
             if(item != null && item.getType() == Material.STAINED_GLASS_PANE)
             {
                 int data = item.getDurability();
-                if(data == 15) data = 0;
+                data++;
+                if(data > 15) data = 0;
                 item.setDurability((short)data);
             }
         }

@@ -45,6 +45,8 @@ public interface UnlockableItem
                     loreList.add(ChatColor.YELLOW + s);
                 }
 
+                meta.setLore(loreList);
+
                 setItemMeta(meta);
             }
         };
@@ -67,6 +69,8 @@ public interface UnlockableItem
                 {
                     loreList.add(ChatColor.YELLOW + s);
                 }
+
+                meta.setLore(loreList);
 
                 setItemMeta(meta);
             }

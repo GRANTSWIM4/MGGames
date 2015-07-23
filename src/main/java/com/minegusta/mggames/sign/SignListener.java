@@ -31,7 +31,7 @@ public class SignListener implements Listener {
                 if(instanceName.length() == 0) return;
 
                 Optional<String> found = Register.getSessionNames().stream().filter(name -> name.equalsIgnoreCase(instanceName)).findFirst();
-                if(found == null)return;
+                if(!found.isPresent())return;
 
                 AbstractGame game = Register.getGame(found.get());
 
