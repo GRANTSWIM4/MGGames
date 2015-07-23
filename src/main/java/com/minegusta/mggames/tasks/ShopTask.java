@@ -15,7 +15,7 @@ public class ShopTask
 
     public static void start()
     {
-        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ShopTask::updateInvs,20*4,20*4);
+        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ShopTask::updateInvs,4,4);
     }
 
     public static void stop()
@@ -31,7 +31,7 @@ public class ShopTask
         if(invs.isEmpty()) return;
         invs.stream().forEach(i ->
         {
-            if(i.getViewers().size() == 0)
+            if(i == null || i.getContents() == null || i.getViewers().isEmpty())
             {
                 invs.remove(i);
             }

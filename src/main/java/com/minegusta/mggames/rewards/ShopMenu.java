@@ -40,8 +40,8 @@ public class ShopMenu
     {
         {
             ItemMeta meta = getItemMeta();
-            meta.setDisplayName("");
-            meta.setLore(Lists.newArrayList(""));
+            meta.setDisplayName(" ");
+            meta.setLore(Lists.newArrayList(" "));
             setItemMeta(meta);
         }
     };

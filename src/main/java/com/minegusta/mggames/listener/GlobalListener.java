@@ -8,6 +8,7 @@ import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
+import com.minegusta.mggames.util.ScoreboardUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -20,6 +21,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.List;
 
@@ -33,8 +35,9 @@ public class GlobalListener implements Listener {
         if(e.getPlayer().getWorld() != Main.getHub())
         {
             e.getPlayer().teleport(Main.getHub().getSpawnLocation());
-            ChatUtil.sendGameMessage(e.getPlayer(), ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Tickets " + ChatColor.YELLOW + "to view your tickets.", ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Rewards " + ChatColor.YELLOW + "to toggle your active perks.");
         }
+        ChatUtil.sendGameMessage(e.getPlayer(), ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Tickets " + ChatColor.YELLOW + "to view your tickets.", ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Rewards " + ChatColor.YELLOW + "to toggle your active perks.");
+        ScoreboardUtil.setHubBoard(e.getPlayer());
         e.setJoinMessage(null);
     }
 

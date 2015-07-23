@@ -31,7 +31,7 @@ public class ShopListener implements Listener{
 
         e.setCancelled(true);
 
-        if (e.getCurrentItem() == null) return;
+        if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) return;
 
         ItemStack clicked = e.getCurrentItem();
         Unlockable reward = null;
@@ -40,13 +40,11 @@ public class ShopListener implements Listener{
         //Detect tab switching
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.kitShopTab.getItemMeta().getDisplayName()))
         {
-            p.closeInventory();
             ShopMenu.openKitShop(p);
             return;
         }
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.unlockableShopTab.getItemMeta().getDisplayName()))
         {
-            p.closeInventory();
             ShopMenu.openShop(p);
             return;
         }
@@ -74,13 +72,10 @@ public class ShopListener implements Listener{
         for(Unlockable u : Unlockable.values())
         {
             ItemStack stack = u.buildShopItem();
-            if(stack.getType() == clicked.getType() && stack.getData() == clicked.getData())
+            if(clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName() && clicked.getItemMeta().getDisplayName().equals(stack.getItemMeta().getDisplayName()))
             {
-                if(clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName() && clicked.getItemMeta().getDisplayName().equals(stack.getItemMeta().getDisplayName()))
-                {
-                    reward = u;
-                    break;
-                }
+                reward = u;
+                break;
             }
         }
         if(reward == null)
