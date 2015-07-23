@@ -95,6 +95,7 @@ public class ShopListener implements Listener{
         if(mgp.removeTickets(reward.getCost()))
         {
             ChatUtil.sendFormattedMessage(p, "You bought "+ reward.getName() + "!");
+            mgp.addUnlockable(reward);
             ShopTask.removeInventory(e.getClickedInventory());
             ShopMenu.openShop(p);
             if(p.getWorld() == Main.getHub()) ScoreboardUtil.setHubBoard(p);
