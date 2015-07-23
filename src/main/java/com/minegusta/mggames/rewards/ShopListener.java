@@ -2,10 +2,12 @@ package com.minegusta.mggames.rewards;
 
 import com.minegusta.mggames.kits.Kit;
 import com.minegusta.mggames.kits.KitRegistry;
+import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.tasks.ShopTask;
 import com.minegusta.mggames.util.ChatUtil;
+import com.minegusta.mggames.util.ScoreboardUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ShopListener implements Listener{
@@ -40,13 +41,13 @@ public class ShopListener implements Listener{
         //Detect tab switching
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.kitShopTab.getItemMeta().getDisplayName()))
         {
-            ShopTask.invs.remove(e.getClickedInventory());
+            ShopTask.removeInventory(e.getClickedInventory());
             ShopMenu.openKitShop(p);
             return;
         }
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.unlockableShopTab.getItemMeta().getDisplayName()))
         {
-            ShopTask.invs.remove(e.getClickedInventory());
+            ShopTask.removeInventory(e.getClickedInventory());
             ShopMenu.openShop(p);
             return;
         }
@@ -64,7 +65,9 @@ public class ShopListener implements Listener{
                 return;
             }
             mgp.addKit(kit.getName());
-            p.closeInventory();
+            ShopTask.removeInventory(e.getClickedInventory());
+            ShopMenu.openKitShop(p);
+            if(p.getWorld() == Main.getHub()) ScoreboardUtil.setHubBoard(p);
             ChatUtil.sendFormattedMessage(p, "You bought kit " + kit.getName() + "!");
             return;
         }
@@ -92,7 +95,9 @@ public class ShopListener implements Listener{
         if(mgp.removeTickets(reward.getCost()))
         {
             ChatUtil.sendFormattedMessage(p, "You bought "+ reward.getName() + "!");
-            p.closeInventory();
+            ShopTask.removeInventory(e.getClickedInventory());
+            ShopMenu.openShop(p);
+            if(p.getWorld() == Main.getHub()) ScoreboardUtil.setHubBoard(p);
             return;
         }
         else
