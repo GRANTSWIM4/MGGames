@@ -73,9 +73,12 @@ public class ShopMenu
             data++;
         }
 
+        MGPlayer mgp = Register.getPlayer(p);
+
         int slot = 9;
         for(Unlockable u : Unlockable.values())
         {
+            if(mgp.hasUnlockable(u))continue;
             inv.setItem(slot, u.buildShopItem());
             slot++;
         }
