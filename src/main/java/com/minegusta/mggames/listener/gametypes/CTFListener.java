@@ -60,7 +60,6 @@ public class CTFListener implements Listener
         Block clicked = e.getClickedBlock();
         MGPlayer mgp = Register.getPlayer(p);
 
-
         if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF || mgp.getSession().getStage() != Stage.PLAYING)return;
 
         TeamType team = mgp.getTeam().getType();
@@ -68,27 +67,27 @@ public class CTFListener implements Listener
         CaptureTheFlag ctf = (CaptureTheFlag) mgp.getSession();
 
         //Taking the blue wool
-        if(team == TeamType.RED && !ctf.isBlueWoolTaken() && ctf.getBlueWool() == clicked)
+        if(team == TeamType.RED && !ctf.isBlueWoolTaken() && ctf.getBlueWool().getBlock() == clicked)
         {
             ctf.setBlueFlagCarrier(mgp);
             ctf.takeBlueWool(mgp);
         }
         //Taking the red wool
-        if(team == TeamType.BLUE && !ctf.isRedWoolTaken() && clicked == ctf.getRedWool())
+        if(team == TeamType.BLUE && !ctf.isRedWoolTaken() && clicked == ctf.getRedWool().getBlock())
         {
             ctf.setRedFlagCarrier(mgp);
             ctf.takeRedWool(mgp);
         }
 
         //Scoring a red point
-        if(team == TeamType.RED && !ctf.isRedWoolTaken() && ctf.isBlueWoolTaken() && clicked == ctf.getRedWool() && ctf.getBlueFlagCarrier() == mgp)
+        if(team == TeamType.RED && !ctf.isRedWoolTaken() && ctf.isBlueWoolTaken() && clicked == ctf.getRedWool().getBlock() && ctf.getBlueFlagCarrier() == mgp)
         {
             ctf.returnBlueWool();
             ctf.addScore(TeamType.RED, mgp);
         }
 
         //Scoring a blue point
-        if(team == TeamType.BLUE && !ctf.isBlueWoolTaken() && ctf.isRedWoolTaken() && clicked == ctf.getBlueWool() && ctf.getRedFlagCarrier() == mgp)
+        if(team == TeamType.BLUE && !ctf.isBlueWoolTaken() && ctf.isRedWoolTaken() && clicked == ctf.getBlueWool().getBlock() && ctf.getRedFlagCarrier() == mgp)
         {
             ctf.returnRedWool();
             ctf.addScore(TeamType.BLUE, mgp);
