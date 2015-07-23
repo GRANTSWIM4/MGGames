@@ -35,7 +35,7 @@ public class ScoreboardUtil {
     public static void setHubBoard(Player p)
     {
         Scoreboard hubBoard = Bukkit.getScoreboardManager().getNewScoreboard();
-        Objective hubObjective = board.registerNewObjective("tickets", "dummy");
+        Objective hubObjective = hubBoard.registerNewObjective("tickets", "dummy");
         hubObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
         hubObjective.setDisplayName(ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG");
         Team hubTeam = hubBoard.registerNewTeam("hub");
