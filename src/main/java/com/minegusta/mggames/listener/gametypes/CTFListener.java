@@ -7,6 +7,7 @@ import com.minegusta.mggames.gametype.CaptureTheFlag;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -54,6 +55,7 @@ public class CTFListener implements Listener
     @EventHandler
     public void onFlagHit(PlayerInteractEvent e)
     {
+        Bukkit.broadcastMessage("Running flag event...");
         if(!e.hasBlock())return;
 
         Player p = e.getPlayer();
@@ -62,9 +64,15 @@ public class CTFListener implements Listener
 
         if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF || mgp.getSession().getStage() != Stage.PLAYING)return;
 
+        Bukkit.broadcastMessage("CTF interact with block detected!");
+
         TeamType team = mgp.getTeam().getType();
 
         CaptureTheFlag ctf = (CaptureTheFlag) mgp.getSession();
+
+        Bukkit.broadcastMessage("blue taken: " + ctf.isBlueWoolTaken());
+        Bukkit.broadcastMessage("team interactor: " + team.name());
+        Bukkit.broadcastMessage("Wool block = clicked: " + Boolean.toString(ctf.getBlueWool().getBlock() == clicked));
 
         //Taking the blue wool
         if(team == TeamType.RED && !ctf.isBlueWoolTaken() && ctf.getBlueWool().getBlock() == clicked)
