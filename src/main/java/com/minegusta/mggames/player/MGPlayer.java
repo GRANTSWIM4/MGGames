@@ -231,6 +231,8 @@ public class MGPlayer {
         this.kit = null;
         this.kills = 0;
         ScoreboardUtil.setHubBoard(getPlayer());
+        getPlayer().setFoodLevel(20);
+        getPlayer().setHealth(getPlayer().getMaxHealth());
 
         clearPotions();
     }

@@ -38,6 +38,8 @@ public class GlobalListener implements Listener {
         }
         ChatUtil.sendGameMessage(e.getPlayer(), ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Tickets " + ChatColor.YELLOW + "to view your tickets.", ChatColor.YELLOW + "Use " + ChatColor.LIGHT_PURPLE + "/Rewards " + ChatColor.YELLOW + "to toggle your active perks.");
         ScoreboardUtil.setHubBoard(e.getPlayer());
+        e.getPlayer().setFoodLevel(20);
+        e.getPlayer().setHealth(e.getPlayer().getMaxHealth());
         e.setJoinMessage(null);
     }
 
