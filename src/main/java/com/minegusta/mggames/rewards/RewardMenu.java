@@ -42,7 +42,6 @@ public class RewardMenu
         int slot = 0;
         for(Unlockable u : mgp.getUnlockables())
         {
-            if(u.getType() != UnlockableType.TOGGLE) continue;
             boolean active = mgp.getActiveUnlockables().contains(u);
             inv.setItem(slot, u.buildUnlockedItem(active));
             slot++;
