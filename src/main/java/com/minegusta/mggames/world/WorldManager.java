@@ -24,7 +24,7 @@ public class WorldManager
 
     public static boolean unLoadWorld(String world, boolean save)
     {
-        return Bukkit.unloadWorld(world, save);
+        return isLoaded(world) && Bukkit.unloadWorld(world, save);
     }
 
     public static boolean worldExists(String world)
