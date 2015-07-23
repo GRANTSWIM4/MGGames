@@ -101,6 +101,8 @@ public abstract class AbstractGame {
 
     public void onRespawn(MGPlayer mgp, String message)
     {
+        mgp.getPlayer().setHealth(mgp.getPlayer().getMaxHealth());
+        mgp.getPlayer().setFoodLevel(20);
         if(respawnWithKit() && mgp.getKit() != null)
         {
             mgp.getKit().apply(mgp.getPlayer());
@@ -258,6 +260,9 @@ public abstract class AbstractGame {
         setTeam(mgp);
         mgp.setSession(this);
 
+        mgp.getPlayer().setHealth(mgp.getPlayer().getMaxHealth());
+        mgp.getPlayer().setFoodLevel(20);
+
         if(forceKit && KitRegistry.exists(getDefaultKit()))
         {
             mgp.setKit(KitRegistry.getKit(getDefaultKit()));
@@ -265,7 +270,7 @@ public abstract class AbstractGame {
 
         mgp.getPlayer().teleport(lobby);
 
-        if(getPlayers().size() >= getMaxPlayers() && !starting)
+        if(getPlayers().size() >= getMinPlayers() && !starting)
         {
             Timer.startLobbyTimer(this);
             starting = true;
