@@ -122,7 +122,8 @@ public class GlobalListener implements Listener {
         }
         else
         {
-            mgp.getSession().onRespawn(mgp, "");
+            e.setRespawnLocation(mgp.getTeam().getSpawn());
+            mgp.getSession().onRespawn(mgp, null);
         }
     }
 
