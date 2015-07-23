@@ -27,7 +27,7 @@ public class RainbowTrail implements UnlockableItem {
 
     @Override
     public String getName() {
-        return ChatColor.RED + "Rainbow";
+        return ChatColor.RED + "Rainbow Trail";
     }
 
     @Override
