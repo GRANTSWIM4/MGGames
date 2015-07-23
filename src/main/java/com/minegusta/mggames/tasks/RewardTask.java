@@ -11,7 +11,7 @@ public class RewardTask
 
     public static void start()
     {
-        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), RewardTask::boost,20, 20);
+        id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), RewardTask::boost,10, 10);
     }
 
     public static void stop()
