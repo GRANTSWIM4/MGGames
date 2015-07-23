@@ -149,6 +149,7 @@ public class ShopMenu
                 ItemMeta meta = getItemMeta();
                 meta.setDisplayName(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + name);
                 meta.setLore(Lists.newArrayList(ChatColor.GREEN + "Click this to", ChatColor.GREEN + "unlock " + name + ".", ChatColor.LIGHT_PURPLE + "Cost: " + ChatColor.DARK_PURPLE + cost + " Tickets"));
+                setItemMeta(meta);
             }
         };
     }
