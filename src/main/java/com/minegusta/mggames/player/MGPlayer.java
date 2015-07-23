@@ -94,12 +94,14 @@ public class MGPlayer {
     public void setTickets(int tickets)
     {
         this.tickets = tickets;
+        ScoreboardUtil.setHubBoard(getPlayer());
     }
 
     public void addTickets(int added)
     {
         ChatUtil.sendGameMessage(getPlayer(), ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.DARK_PURPLE + added + ChatColor.LIGHT_PURPLE + " tickets!");
         this.tickets = tickets + added;
+        ScoreboardUtil.setHubBoard(getPlayer());
     }
 
     public boolean removeTickets(int removed)
@@ -107,6 +109,7 @@ public class MGPlayer {
         if(tickets - removed >= 0)
         {
             tickets = tickets - removed;
+            ScoreboardUtil.setHubBoard(getPlayer());
             return true;
         }
         return false;
