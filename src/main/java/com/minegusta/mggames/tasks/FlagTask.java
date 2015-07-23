@@ -4,6 +4,7 @@ import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.player.MGPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 
 public class FlagTask
@@ -23,8 +24,10 @@ public class FlagTask
         id = Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ()->
         {
             if(mgp == null) stop();
-            mgp.getPlayer().getWorld().spigot().playEffect(mgp.getPlayer().getLocation(), Effect.TILE_BREAK, block.getId(), 0, 1, 1, 1, 1/5, 20, 40);
-        },20,20);
+            Location l = mgp.getPlayer().getLocation();
+            l.add(0,2,0);
+            mgp.getPlayer().getWorld().spigot().playEffect(mgp.getPlayer().getLocation(), Effect.TILE_BREAK, block.getId(), 0, 0.5F, 0.5F, 0.5F, 1/10, 15, 40);
+        },10,10);
     }
 
     public void stop()
