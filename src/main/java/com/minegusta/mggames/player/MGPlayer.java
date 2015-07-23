@@ -213,7 +213,7 @@ public class MGPlayer {
     public void removeActiveUnlockable(Unlockable remove)
     {
         ChatUtil.sendGameMessage(getPlayer(), remove.getName() + " is now no longer activated!");
-        if(activeUnlockables.contains(remove))activeUnlockables.add(remove);
+        if(activeUnlockables.contains(remove))activeUnlockables.remove(remove);
     }
 
     public void addActiveUnlockable(Unlockable added)
