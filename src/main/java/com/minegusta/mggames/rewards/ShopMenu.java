@@ -88,7 +88,7 @@ public class ShopMenu
 
         //Set the task + open the inv for the player
         p.openInventory(inv);
-        if(message)ChatUtil.sendFormattedMessage(p, ChatColor.LIGHT_PURPLE + "You have " + ChatColor.DARK_PURPLE + Register.getPlayer(p).getTickets() + ChatColor.LIGHT_PURPLE + " tickets.", "Use " + ChatColor.YELLOW +  "/Rewards " + ChatColor.GRAY + "to select your active ones.");
+        if(message)ChatUtil.sendFormattedMessage(p, ChatColor.LIGHT_PURPLE + "You have " + ChatColor.DARK_PURPLE + Register.getPlayer(p).getTickets() + ChatColor.LIGHT_PURPLE + " tickets.", ChatColor.GRAY + "Use " + ChatColor.YELLOW +  "/Rewards " + ChatColor.GRAY + "to select your active ones.");
         ShopTask.addInventory(inv);
     }
 
