@@ -277,13 +277,11 @@ public class GlobalListener implements Listener {
         }
     }
 
-    private static final List<CreatureSpawnEvent.SpawnReason> blockedreasons = Lists.newArrayList(CreatureSpawnEvent.SpawnReason.NATURAL, CreatureSpawnEvent.SpawnReason.REINFORCEMENTS, CreatureSpawnEvent.SpawnReason.DEFAULT);
-
     //Block mobs from spawning naturally
     @EventHandler
     public void onMobSpawn(CreatureSpawnEvent e)
     {
-        if(blockedreasons.contains(e.getSpawnReason()))
+        if(e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.CUSTOM)
         {
             e.setCancelled(true);
         }
