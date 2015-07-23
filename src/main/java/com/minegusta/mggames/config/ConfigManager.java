@@ -60,6 +60,6 @@ public class ConfigManager
 
     public static void savePlayerFile(Player p, FileConfiguration f)
     {
-        YamlUtil.saveFile("/players/", p.getUniqueId().toString(), f);
+        YamlUtil.saveFile("/players/", p.getUniqueId().toString() + ".yml", f);
     }
 }
