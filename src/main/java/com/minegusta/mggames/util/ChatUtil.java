@@ -9,19 +9,17 @@ public class ChatUtil
 {
     public static void sendFormattedMessage(Player p, String... s)
     {
-        p.sendMessage(ChatColor.YELLOW + "- - - " + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.YELLOW + " - - -");
         for(String string : s)
         {
-            p.sendMessage(ChatColor.GRAY + string);
+            p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.DARK_GRAY + "]" + ChatColor.YELLOW +  string);
         }
     }
 
     public static void sendFormattedMessage(Player p, List<String> s)
     {
-        p.sendMessage(ChatColor.YELLOW + "- - - " + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.YELLOW + " - - -");
         for(String string : s)
         {
-            p.sendMessage(ChatColor.GRAY + string);
+            p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.DARK_GRAY + "]" + ChatColor.YELLOW +  string);
         }
     }
 
