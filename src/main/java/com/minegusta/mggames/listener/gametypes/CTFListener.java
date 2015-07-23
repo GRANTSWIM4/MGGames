@@ -71,13 +71,11 @@ public class CTFListener implements Listener
         //Taking the blue wool
         if(team == TeamType.RED && !ctf.isBlueWoolTaken() && locationsMatch(ctf.getBlueWool(), clicked.getLocation()))
         {
-            ctf.setBlueFlagCarrier(mgp);
             ctf.takeBlueWool(mgp);
         }
         //Taking the red wool
         if(team == TeamType.BLUE && !ctf.isRedWoolTaken() && locationsMatch(clicked.getLocation(), ctf.getRedWool()))
         {
-            ctf.setRedFlagCarrier(mgp);
             ctf.takeRedWool(mgp);
         }
 

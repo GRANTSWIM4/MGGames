@@ -26,8 +26,8 @@ public class FlagTask
             if(mgp == null) stop();
             Location l = mgp.getPlayer().getLocation();
             l.add(0,2,0);
-            mgp.getPlayer().getWorld().spigot().playEffect(mgp.getPlayer().getLocation(), Effect.TILE_BREAK, block.getId(), 0, 0.5F, 0.5F, 0.5F, 1/10, 15, 40);
-        },10,10);
+            mgp.getPlayer().getWorld().spigot().playEffect(l, Effect.TILE_BREAK, block.getId(), 0, 0.5F, 0.5F, 0.5F, 1/10, 10, 40);
+        },5,5);
     }
 
     public void stop()
