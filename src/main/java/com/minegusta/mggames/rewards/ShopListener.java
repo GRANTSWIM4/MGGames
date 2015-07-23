@@ -40,11 +40,13 @@ public class ShopListener implements Listener{
         //Detect tab switching
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.kitShopTab.getItemMeta().getDisplayName()))
         {
+            ShopTask.invs.remove(e.getClickedInventory());
             ShopMenu.openKitShop(p);
             return;
         }
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.unlockableShopTab.getItemMeta().getDisplayName()))
         {
+            ShopTask.invs.remove(e.getClickedInventory());
             ShopMenu.openShop(p);
             return;
         }
