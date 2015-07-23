@@ -38,7 +38,7 @@ public class KitListener implements Listener {
         kit = KitRegistry.getKit(string);
 
 
-        if(mgp.getSession() == null || !mgp.getSession().getAvailableKits().contains(string)) return;
+        if(mgp.getSession() == null) return;
 
         if(kit.isDefault() || mgp.hasKit(kit.getName()))
         {
