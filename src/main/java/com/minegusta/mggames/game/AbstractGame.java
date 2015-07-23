@@ -345,7 +345,7 @@ public abstract class AbstractGame {
             onStop(StopReason.WORLD_ERROR);
             return;
         }
-        WorldManager.loadWorld(world);
+        WorldManager.loadWorld(world, false);
     }
 
     public Location getLobby()
@@ -388,7 +388,7 @@ public abstract class AbstractGame {
                 }
             }
             //unload the played world
-            WorldManager.unLoadWorld(world);
+            WorldManager.unLoadWorld(world, false);
         }
 
         for(Player p : Main.getHub().getPlayers())

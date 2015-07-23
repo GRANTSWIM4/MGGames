@@ -68,7 +68,7 @@ public class LoadWorldCommand implements CommandExecutor
                 return true;
             }
 
-            WorldManager.loadWorld(worldName);
+            WorldManager.loadWorld(worldName, true);
             ChatUtil.sendFormattedMessage(p, "You loaded the world " + worldName + ".");
             return true;
 
