@@ -99,7 +99,7 @@ public class MGPlayer {
 
     public void addTickets(int added)
     {
-        ChatUtil.sendGameMessage(getPlayer(), ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.DARK_PURPLE + added + ChatColor.LIGHT_PURPLE + " tickets!");
+        ChatUtil.sendFormattedMessage(getPlayer(), ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.DARK_PURPLE + added + ChatColor.LIGHT_PURPLE + " tickets!");
         this.tickets = tickets + added;
         ScoreboardUtil.setHubBoard(getPlayer());
     }
@@ -209,19 +209,19 @@ public class MGPlayer {
 
     public void clearActiveUnlockables()
     {
-        ChatUtil.sendGameMessage(getPlayer(), "You disabled all active unlockables!");
+        ChatUtil.sendFormattedMessage(getPlayer(), "You disabled all active unlockables!");
         activeUnlockables.clear();
     }
 
     public void removeActiveUnlockable(Unlockable remove)
     {
-        ChatUtil.sendGameMessage(getPlayer(), remove.getName() + " is now no longer activated!");
+        ChatUtil.sendFormattedMessage(getPlayer(), remove.getName() + " is now no longer activated!");
         if(activeUnlockables.contains(remove))activeUnlockables.remove(remove);
     }
 
     public void addActiveUnlockable(Unlockable added)
     {
-        ChatUtil.sendGameMessage(getPlayer(), added.getName() + " is now active!");
+        ChatUtil.sendFormattedMessage(getPlayer(), added.getName() + " is now active!");
         activeUnlockables.add(added);
     }
 

@@ -215,7 +215,7 @@ public abstract class AbstractGame {
 
     public void setTeam(MGPlayer mgp, Team team)
     {
-        ChatUtil.sendGameMessage(mgp.getPlayer(), "You joined team " + team.getType().name() + ".");
+        ChatUtil.sendFormattedMessage(mgp.getPlayer(), "You joined team " + team.getType().name() + ".");
         removeFromTeam(mgp);
         mgp.setTeam(team);
         team.addPlayer(mgp);

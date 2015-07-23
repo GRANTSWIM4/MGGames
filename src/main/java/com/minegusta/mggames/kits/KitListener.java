@@ -43,7 +43,7 @@ public class KitListener implements Listener {
         if(kit.isDefault() || mgp.hasKit(kit.getName()))
         {
             mgp.setKit(kit);
-            ChatUtil.sendGameMessage(mgp.getPlayer(), "You selected " + kit.getName() + " as your class.");
+            ChatUtil.sendFormattedMessage(mgp.getPlayer(), "You selected " + kit.getName() + " as your class.");
         }
         else
         {

@@ -46,7 +46,7 @@ public class CTFListener implements Listener
 
         if(mgp.getSession() == null || mgp.getSession().getGameType() != GameTypes.CTF) return;
 
-        ChatUtil.sendGameMessage(p, "You cannot drop items in CTF!");
+        ChatUtil.sendFormattedMessage(p, "You cannot drop items in CTF!");
         e.setCancelled(true);
     }
 

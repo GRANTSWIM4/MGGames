@@ -96,7 +96,7 @@ public class CaptureTheFlag extends AbstractGame
 
         getPlayers().stream().forEach(p ->
         {
-            ChatUtil.sendGameMessage(p.getPlayer(), mgp.getPlayer().getName() + team.getColor() + " scored a point for team " + team.name() + "!");
+            ChatUtil.sendFormattedMessage(p.getPlayer(), mgp.getPlayer().getName() + team.getColor() + " scored a point for team " + team.name() + "!");
         });
     }
 
@@ -115,7 +115,7 @@ public class CaptureTheFlag extends AbstractGame
 
         getPlayers().stream().forEach(p ->
         {
-            ChatUtil.sendGameMessage(p.getPlayer(), message);
+            ChatUtil.sendFormattedMessage(p.getPlayer(), message);
         });
 
         super.onRespawn(mgp, message);
@@ -206,7 +206,7 @@ public class CaptureTheFlag extends AbstractGame
     public void onPlayerJoin(MGPlayer mgp)
     {
         //Send messages and stuff
-        ChatUtil.sendGameMessage(mgp.getPlayer(), "You joined Capture The Flag!");
+        ChatUtil.sendFormattedMessage(mgp.getPlayer(), "You joined Capture The Flag!");
 
         super.onPlayerJoin(mgp);
     }
@@ -248,7 +248,7 @@ public class CaptureTheFlag extends AbstractGame
         blueWoolTaken = false;
         blueFlagCarrier = null;
         blueFlagTask.stop();
-        getPlayers().stream().forEach(p -> ChatUtil.sendGameMessage(p.getPlayer(), "The blue flag has been returned."));
+        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been returned."));
     }
 
     public void returnRedWool()
@@ -257,7 +257,7 @@ public class CaptureTheFlag extends AbstractGame
         redWoolTaken = false;
         redFlagCarrier = null;
         redFlagTask.stop();
-        getPlayers().stream().forEach(p -> ChatUtil.sendGameMessage(p.getPlayer(), "The red flag has been returned."));
+        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The red flag has been returned."));
     }
 
     public MGPlayer getRedFlagCarrier()
@@ -285,7 +285,7 @@ public class CaptureTheFlag extends AbstractGame
         this.redFlagCarrier = mgp;
         redFlagTask = new FlagTask(mgp, Material.REDSTONE_BLOCK);
         redFlagTask.start();
-        getPlayers().stream().forEach(p -> ChatUtil.sendGameMessage(p.getPlayer(), "The red flag has been taken by " + mgp.getPlayer().getName() + "!"));
+        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The red flag has been taken by " + mgp.getPlayer().getName() + "!"));
 
     }
 
@@ -294,6 +294,6 @@ public class CaptureTheFlag extends AbstractGame
         this.blueFlagCarrier = mgp;
         blueFlagTask = new FlagTask(mgp, Material.LAPIS_BLOCK);
         blueFlagTask.start();
-        getPlayers().stream().forEach(p -> ChatUtil.sendGameMessage(p.getPlayer(), "The blue flag has been taken " + mgp.getPlayer().getName() + "!"));
+        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been taken " + mgp.getPlayer().getName() + "!"));
     }
 }
