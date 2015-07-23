@@ -276,7 +276,7 @@ public abstract class AbstractGame {
             starting = true;
         }
 
-        List<String> votes = Lists.newArrayList("   " + ChatColor.GREEN + "--- Votes ---");
+        List<String> votes = Lists.newArrayList(ChatColor.GREEN + "--- Votes ---");
         worlds.keySet().stream().forEach(s ->
         {
             String add = s + ": " + ChatColor.AQUA + worlds.get(s);

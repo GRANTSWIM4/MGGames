@@ -11,7 +11,7 @@ public class ChatUtil
     {
         for(String string : s)
         {
-            p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.DARK_GRAY + "]" + ChatColor.YELLOW +  string);
+            p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.DARK_GRAY + "] " + ChatColor.YELLOW +  string);
         }
     }
 
@@ -19,7 +19,7 @@ public class ChatUtil
     {
         for(String string : s)
         {
-            p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.DARK_GRAY + "]" + ChatColor.YELLOW +  string);
+            p.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "DG" + ChatColor.DARK_GRAY + "-" + ChatColor.DARK_AQUA + "MG" + ChatColor.DARK_GRAY + "] " + ChatColor.YELLOW +  string);
         }
     }
 }
