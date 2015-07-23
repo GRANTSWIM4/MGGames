@@ -42,13 +42,13 @@ public class ShopListener implements Listener{
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.kitShopTab.getItemMeta().getDisplayName()))
         {
             ShopTask.removeInventory(e.getClickedInventory());
-            ShopMenu.openKitShop(p);
+            ShopMenu.openKitShop(p, true);
             return;
         }
         if(clicked.getItemMeta().getDisplayName().equals(ShopMenu.unlockableShopTab.getItemMeta().getDisplayName()))
         {
             ShopTask.removeInventory(e.getClickedInventory());
-            ShopMenu.openShop(p);
+            ShopMenu.openShop(p, true);
             return;
         }
 
@@ -66,7 +66,7 @@ public class ShopListener implements Listener{
             }
             mgp.addKit(kit.getName());
             ShopTask.removeInventory(e.getClickedInventory());
-            ShopMenu.openKitShop(p);
+            ShopMenu.openKitShop(p, false);
             if(p.getWorld() == Main.getHub()) ScoreboardUtil.setHubBoard(p);
             ChatUtil.sendFormattedMessage(p, "You bought kit " + kit.getName() + "!");
             return;
@@ -97,7 +97,7 @@ public class ShopListener implements Listener{
             ChatUtil.sendFormattedMessage(p, "You bought "+ reward.getName() + "!");
             mgp.addUnlockable(reward);
             ShopTask.removeInventory(e.getClickedInventory());
-            ShopMenu.openShop(p);
+            ShopMenu.openShop(p, false);
             if(p.getWorld() == Main.getHub()) ScoreboardUtil.setHubBoard(p);
             return;
         }
@@ -117,7 +117,7 @@ public class ShopListener implements Listener{
         if(e.getRightClicked() instanceof Villager)
         {
             e.setCancelled(true);
-            ShopMenu.openShop(e.getPlayer());
+            ShopMenu.openShop(e.getPlayer(), true);
         }
     }
 

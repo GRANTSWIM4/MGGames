@@ -54,7 +54,7 @@ public class ShopMenu
         return stack;
     }
 
-    public static void openShop(Player p)
+    public static void openShop(Player p, boolean message)
     {
         //Create the inv
         Inventory inv = Bukkit.createInventory(p, 9 * 5, ChatColor.DARK_RED + "DG" + ChatColor.GRAY + "-" + ChatColor.DARK_AQUA + "MG " + ChatColor.LIGHT_PURPLE + "Shop");
@@ -85,11 +85,11 @@ public class ShopMenu
 
         //Set the task + open the inv for the player
         p.openInventory(inv);
-        ChatUtil.sendFormattedMessage(p, ChatColor.LIGHT_PURPLE + "You have " + ChatColor.DARK_PURPLE + Register.getPlayer(p).getTickets() + ChatColor.LIGHT_PURPLE + " tickets.", "Use " + ChatColor.YELLOW +  "/Rewards " + ChatColor.GRAY + "to select your active ones.");
+        if(message)ChatUtil.sendFormattedMessage(p, ChatColor.LIGHT_PURPLE + "You have " + ChatColor.DARK_PURPLE + Register.getPlayer(p).getTickets() + ChatColor.LIGHT_PURPLE + " tickets.", "Use " + ChatColor.YELLOW +  "/Rewards " + ChatColor.GRAY + "to select your active ones.");
         ShopTask.addInventory(inv);
     }
 
-    public static void openKitShop(Player p)
+    public static void openKitShop(Player p, boolean message)
     {
         //Create the inv
         Inventory inv = Bukkit.createInventory(p, 9 * 5, ChatColor.DARK_RED + "DG" + ChatColor.GRAY + "-" + ChatColor.DARK_AQUA + "MG " + ChatColor.LIGHT_PURPLE + "Kits");
@@ -123,7 +123,7 @@ public class ShopMenu
 
         //Set the task + open the inv for the player
         p.openInventory(inv);
-        ChatUtil.sendFormattedMessage(p, ChatColor.LIGHT_PURPLE + "You opened the kit menu.");
+        if(message)ChatUtil.sendFormattedMessage(p, ChatColor.LIGHT_PURPLE + "You opened the kit menu.");
         ShopTask.addInventory(inv);
     }
 
