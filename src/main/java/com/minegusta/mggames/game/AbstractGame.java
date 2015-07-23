@@ -276,14 +276,14 @@ public abstract class AbstractGame {
             starting = true;
         }
 
-        List<String> votes = Lists.newArrayList(ChatColor.GREEN + "--- Votes ---");
+        List<String> votes = Lists.newArrayList(ChatColor.GREEN + "[World Votes]");
         worlds.keySet().stream().forEach(s ->
         {
-            String add = s + ": " + ChatColor.AQUA + worlds.get(s);
+            String add = ChatColor.BLUE + s + ": " + ChatColor.AQUA + worlds.get(s);
             votes.add(add);
         });
 
-        votes.add(ChatColor.YELLOW + "/Vote <MapName>");
+        votes.add(ChatColor.GRAY + "/vote <map>");
         ChatUtil.sendFormattedMessage(mgp.getPlayer(), votes);
     }
 
@@ -480,14 +480,14 @@ public abstract class AbstractGame {
 
                 worlds.put(chosen, worlds.get(chosen) + 1);
 
-                List<String> votes = Lists.newArrayList(ChatColor.GREEN + "--- Votes ---");
+                List<String> votes = Lists.newArrayList(ChatColor.GREEN + "[World Votes]");
                 worlds.keySet().stream().forEach(s ->
                 {
-                    String add = s + ": " + ChatColor.AQUA + worlds.get(s);
+                    String add = ChatColor.BLUE + s + ": " + ChatColor.LIGHT_PURPLE + worlds.get(s);
                     votes.add(add);
                 });
 
-                ChatUtil.sendFormattedMessage(p, "You voted for " + world.toLowerCase() + ".");
+                ChatUtil.sendFormattedMessage(p, ChatColor.GRAY + "You voted for " + world.toLowerCase() + ".");
                 for(MGPlayer mgp : getPlayers())
                 {
                     ChatUtil.sendFormattedMessage(mgp.getPlayer(), votes);
@@ -495,10 +495,10 @@ public abstract class AbstractGame {
             }
             else
             {
-                ChatUtil.sendFormattedMessage(p, "That map does not exist!");
+                ChatUtil.sendFormattedMessage(p, ChatColor.GRAY + "That map does not exist!");
             }
             return;
         }
-        ChatUtil.sendFormattedMessage(p, "You have already voted!");
+        ChatUtil.sendFormattedMessage(p, ChatColor.GRAY + "You have already voted!");
     }
 }
