@@ -37,8 +37,7 @@ public class Timer {
                             {
                                 game.setStage(Stage.GRACE);
                                 game.pickWorld();
-                                game.getPlayers().stream().forEach(mgp -> ChatUtil.sendFormattedMessage(mgp.getPlayer(), "Loading world and starting game."));
-                                game.loadWorld();
+                                game.getPlayers().stream().forEach(mgp -> ChatUtil.sendFormattedMessage(mgp.getPlayer(), "Loading world and starting game.", ChatColor.GREEN + "Grace period started!"));
                                 game.onStart();
                                 startGraceTimer(game);
                             }

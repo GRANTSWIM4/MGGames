@@ -47,6 +47,10 @@ public class CaptureTheFlag extends AbstractGame
     @Override
     public void onStop(StopReason reason)
     {
+        //Make sure to stop the tasks and return the wool.
+        returnBlueWool(false);
+        returnRedWool(false);
+
         super.onStop(reason);
 
         //Clean specific data from memory and reset edited blocks
@@ -131,11 +135,11 @@ public class CaptureTheFlag extends AbstractGame
         //Flag checks
         if(redFlagCarrier != null && mgp == redFlagCarrier)
         {
-            returnRedWool();
+            returnRedWool(true);
         }
         else if(blueFlagCarrier != null && mgp == blueFlagCarrier)
         {
-            returnBlueWool();
+            returnBlueWool(true);
         }
 
     }
@@ -191,11 +195,11 @@ public class CaptureTheFlag extends AbstractGame
         //Flag checks
         if(redFlagCarrier != null && mgp == redFlagCarrier)
         {
-            returnRedWool();
+            returnRedWool(true);
         }
         else if(blueFlagCarrier != null && mgp == blueFlagCarrier)
         {
-            returnBlueWool();
+            returnBlueWool(true);
         }
 
         super.onPlayerLeave(mgp);
@@ -246,22 +250,22 @@ public class CaptureTheFlag extends AbstractGame
         return true;
     }
 
-    public void returnBlueWool()
+    public void returnBlueWool(boolean message)
     {
         getBlueWool().getBlock().setData((byte)11);
         blueWoolTaken = false;
         blueFlagCarrier = null;
         blueFlagTask.stop();
-        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been returned."));
+        if(message) getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been returned."));
     }
 
-    public void returnRedWool()
+    public void returnRedWool(boolean message)
     {
         getRedWool().getBlock().setData((byte)14);
         redWoolTaken = false;
         redFlagCarrier = null;
         redFlagTask.stop();
-        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The red flag has been returned."));
+        if(message) getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The red flag has been returned."));
     }
 
     public MGPlayer getRedFlagCarrier()
@@ -284,7 +288,7 @@ public class CaptureTheFlag extends AbstractGame
         return blueWoolTaken;
     }
 
-    public void setRedFlagCarrier(MGPlayer mgp)
+    private void setRedFlagCarrier(MGPlayer mgp)
     {
         this.redFlagCarrier = mgp;
         redFlagTask = new FlagTask(mgp, Material.REDSTONE_BLOCK);
@@ -293,7 +297,7 @@ public class CaptureTheFlag extends AbstractGame
 
     }
 
-    public void setBlueFlagCarrier(MGPlayer mgp)
+    private void setBlueFlagCarrier(MGPlayer mgp)
     {
         this.blueFlagCarrier = mgp;
         blueFlagTask = new FlagTask(mgp, Material.LAPIS_BLOCK);
