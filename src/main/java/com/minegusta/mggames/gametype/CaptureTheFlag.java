@@ -56,6 +56,8 @@ public class CaptureTheFlag extends AbstractGame
         //Clean specific data from memory and reset edited blocks
         teamBlueLocation = null;
         teamRedLocation = null;
+        redFlagTask = null;
+        blueFlagTask = null;
         redWool = null;
         blueWool = null;
         teamBlueLives = flagLives;
