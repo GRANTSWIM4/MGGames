@@ -321,6 +321,13 @@ public abstract class AbstractGame {
     public void addtime()
     {
         currentPlayTime++;
+        if(maxtime - currentPlayTime < 6)
+        {
+            getPlayers().stream().forEach(p ->
+            {
+                ChatUtil.sendFormattedMessage(p.getPlayer(), "The game will end in " + Integer.toString(maxtime - currentPlayTime) + " minutes!");
+            });
+        }
     }
 
     public int getTime()

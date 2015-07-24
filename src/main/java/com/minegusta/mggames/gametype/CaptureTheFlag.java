@@ -6,6 +6,7 @@ import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.tasks.FlagTask;
 import com.minegusta.mggames.util.ChatUtil;
 import com.minegusta.mggames.util.LocationUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -102,7 +103,7 @@ public class CaptureTheFlag extends AbstractGame
 
         getPlayers().stream().forEach(p ->
         {
-            ChatUtil.sendFormattedMessage(p.getPlayer(), mgp.getPlayer().getName() + team.getColor() + " scored a point for team " + team.name() + "!");
+            ChatUtil.sendFormattedMessage(p.getPlayer(), mgp.getPlayer().getName() + team.getColor() + " scored a point for team " + team.name() + "!", ChatColor.GRAY + "Blue lives remaining: " + ChatColor.BLUE + teamBlueLives, ChatColor.GRAY + "Red lives remaining: " + ChatColor.RED + teamRedLives);
         });
 
         checkifEnd();
