@@ -142,7 +142,7 @@ public abstract class AbstractGame {
             if(team.getType() == TeamType.SPECTATOR)continue;
 
             int size = team.getPlayers().size();
-            if(size <= leastUsers)
+            if(size <= leastUsers || leastUsers == 0)
             {
                 joined = team;
                 leastUsers = size;

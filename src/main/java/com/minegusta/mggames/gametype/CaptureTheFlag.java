@@ -54,7 +54,7 @@ public class CaptureTheFlag extends AbstractGame
 
         super.onStop(reason);
 
-        //Clean specific data from memory and reset edited blocks
+        //Clean specific data
         teamBlueLocation = null;
         teamRedLocation = null;
         redFlagTask = null;

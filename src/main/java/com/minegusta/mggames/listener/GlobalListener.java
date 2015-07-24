@@ -32,6 +32,7 @@ public class GlobalListener implements Listener {
     public void onJoin(PlayerJoinEvent e)
     {
         Register.registerPlayer(e.getPlayer());
+
         if(e.getPlayer().getWorld() != Main.getHub())
         {
             e.getPlayer().teleport(Main.getHub().getSpawnLocation());
