@@ -6,6 +6,7 @@ import com.minegusta.mggames.main.Main;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -25,9 +26,9 @@ public class SignListener implements Listener {
         {
             Sign sign = (Sign) e.getClickedBlock().getState();
 
-            if(sign.getLine(0).equalsIgnoreCase("[Join]"))
+            if(ChatColor.stripColor(sign.getLine(0)).equalsIgnoreCase("[Join]"))
             {
-                String instanceName = sign.getLine(1);
+                String instanceName = ChatColor.stripColor(sign.getLine(1));
                 if(instanceName.length() == 0) return;
 
                 Optional<String> found = Register.getSessionNames().stream().filter(name -> name.equalsIgnoreCase(instanceName)).findFirst();
@@ -55,7 +56,7 @@ public class SignListener implements Listener {
                     ChatUtil.sendFormattedMessage(p, "That game already started!", "Please join another game or wait a while.");
                 }
             }
-            else if(sign.getLine(0).equalsIgnoreCase("[Leave]"))
+            else if(ChatColor.stripColor(sign.getLine(0)).equalsIgnoreCase("[Leave]"))
             {
                 MGPlayer mgp = Register.getPlayer(e.getPlayer());
                 if(mgp.getSession() != null)

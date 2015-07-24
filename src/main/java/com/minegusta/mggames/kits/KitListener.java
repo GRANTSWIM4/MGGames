@@ -3,6 +3,7 @@ package com.minegusta.mggames.kits;
 import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
@@ -21,11 +22,11 @@ public class KitListener implements Listener {
 
         String line1 = sign.getLine(0);
 
-        if(!line1.equalsIgnoreCase("[Kit]"))return;
+        if(!ChatColor.stripColor(line1).equalsIgnoreCase("[Kit]"))return;
 
         if(sign.getLine(1).length() == 0) return;
 
-        String string = sign.getLine(1);
+        String string = ChatColor.stripColor(sign.getLine(1));
 
         MGPlayer mgp = Register.getPlayer(e.getPlayer());
 
