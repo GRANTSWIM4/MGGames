@@ -51,14 +51,17 @@ public class MGItem
             try {
                 Potion p = Potion.fromDamage(data);
                 p.setSplash(true);
+                i = p.toItemStack(amount);
             } catch (Exception ignored)
             {
 
             }
         }
 
-        enchantments.keySet().stream().forEach(ench -> i.addUnsafeEnchantment(ench, enchantments.get(ench)));
-        return i;
+        final ItemStack returned = i;
+
+        enchantments.keySet().stream().forEach(ench -> returned.addUnsafeEnchantment(ench, enchantments.get(ench)));
+        return returned;
     }
 
     public String getName()
