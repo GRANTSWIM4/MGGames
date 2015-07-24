@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
@@ -35,25 +36,25 @@ public class MGItem
 
     public ItemStack buildItem()
     {
-        ItemStack i;
-        if(material == Material.POTION)
+        ItemStack i = new ItemStack(material, amount, (byte) data)
         {
-            Potion potion = new Potion(PotionType.getByDamageValue(data));
-            if(data > 16000) potion.setSplash(true);
-
-            i = potion.toItemStack(amount);
-        }
-        else
-        {
-            i = new ItemStack(material, amount, (byte) data)
             {
-                {
-                    ItemMeta meta = getItemMeta();
-                    meta.setLore(Lists.newArrayList(lore));
-                    meta.setDisplayName(name);
-                    setItemMeta(meta);
-                }
-            };
+                ItemMeta meta = getItemMeta();
+                meta.setLore(Lists.newArrayList(lore));
+                meta.setDisplayName(name);
+                setItemMeta(meta);
+            }
+        };
+
+        if(material == Material.POTION && data > 16000)
+        {
+            try {
+                Potion p = Potion.fromDamage(data);
+                p.setSplash(true);
+            } catch (Exception ignored)
+            {
+
+            }
         }
 
         enchantments.keySet().stream().forEach(ench -> i.addUnsafeEnchantment(ench, enchantments.get(ench)));
