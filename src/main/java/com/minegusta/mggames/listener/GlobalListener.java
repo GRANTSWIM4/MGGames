@@ -286,7 +286,7 @@ public class GlobalListener implements Listener {
     @EventHandler
     public void onMobSpawn(CreatureSpawnEvent e)
     {
-        if(e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.CUSTOM)
+        if(e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.CUSTOM && e.getSpawnReason() != CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)
         {
             e.setCancelled(true);
         }
