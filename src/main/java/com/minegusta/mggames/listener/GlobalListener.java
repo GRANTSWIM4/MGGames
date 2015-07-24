@@ -21,6 +21,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.List;
@@ -166,6 +167,11 @@ public class GlobalListener implements Listener {
             if(mgp.getSession().getStage() == Stage.PLAYING && p.getHealth() - e.getDamage() <= 0)
             {
                 e.setCancelled(true);
+                p.setFireTicks(0);
+                for(PotionEffect f : p.getActivePotionEffects())
+                {
+                    p.removePotionEffect(f.getType());
+                }
                 mgp.getSession().onRespawn(mgp, p.getName() + " died!");
             }
 
