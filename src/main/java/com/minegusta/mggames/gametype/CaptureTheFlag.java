@@ -254,20 +254,25 @@ public class CaptureTheFlag extends AbstractGame
 
     public void returnBlueWool(boolean message)
     {
-        getBlueWool().getBlock().setData((byte)11);
-        blueWoolTaken = false;
-        blueFlagCarrier = null;
-        blueFlagTask.stop();
-        if(message) getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been returned."));
+        try {
+            blueWoolTaken = false;
+            blueFlagCarrier = null;
+            blueFlagTask.stop();
+            getBlueWool().getBlock().setData((byte) 11);
+            if (message)
+                getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been returned."));
+        } catch (Exception ignored){}
     }
 
     public void returnRedWool(boolean message)
     {
-        getRedWool().getBlock().setData((byte)14);
-        redWoolTaken = false;
-        redFlagCarrier = null;
-        redFlagTask.stop();
-        if(message) getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The red flag has been returned."));
+        try {
+            redWoolTaken = false;
+            redFlagCarrier = null;
+            redFlagTask.stop();
+            getRedWool().getBlock().setData((byte)14);
+            if(message) getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The red flag has been returned."));
+        } catch (Exception ignored){}
     }
 
     public MGPlayer getRedFlagCarrier()
