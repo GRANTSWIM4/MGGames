@@ -14,19 +14,19 @@ public class Timer {
         Stage stage = game.getStage();
         if(stage == Stage.LOBBY)
         {
-            for(int i = 0; i <= 30; i++)
+            for(int i = 0; i <= 90; i++)
             {
                 final int k = i;
                 if(i % 5 == 0)
                 {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
                     {
-                        int left  = 30 - k;
+                        int left  = 90 - k;
                        game.getPlayers().stream().forEach(mgp -> ChatUtil.sendFormattedMessage(mgp.getPlayer(), left + " Seconds till game start!"));
                     },20*i);
 
                     //Start the game
-                    if(k == 30)
+                    if(k == 90)
                     {
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
                         {
