@@ -310,6 +310,6 @@ public class CaptureTheFlag extends AbstractGame
         this.blueFlagCarrier = mgp;
         blueFlagTask = new FlagTask(mgp, Material.LAPIS_BLOCK);
         blueFlagTask.start();
-        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been taken " + mgp.getPlayer().getName() + "!"));
+        getPlayers().stream().forEach(p -> ChatUtil.sendFormattedMessage(p.getPlayer(), "The blue flag has been taken by " + mgp.getPlayer().getName() + "!"));
     }
 }
