@@ -15,6 +15,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -129,9 +130,10 @@ public class GlobalListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onDamage(EntityDamageByBlockEvent e)
     {
+        if(e.isCancelled())return;
         if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
@@ -151,9 +153,11 @@ public class GlobalListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onDamage(EntityDamageEvent e)
     {
+        if(e.isCancelled())return;
+
         if(e.getEntity() instanceof Player)
         {
             Player p = (Player) e.getEntity();
@@ -164,6 +168,7 @@ public class GlobalListener implements Listener {
                 e.setCancelled(true);
                 return;
             }
+
             if(mgp.getSession().getStage() == Stage.PLAYING && p.getHealth() - e.getDamage() <= 0)
             {
                 e.setCancelled(true);
@@ -227,7 +232,7 @@ public class GlobalListener implements Listener {
     }
 
     //block team damage
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onTeamDamage(EntityDamageByEntityEvent e)
     {
         if(e.getDamager() instanceof Player && e.getEntity() instanceof Player)
@@ -252,7 +257,7 @@ public class GlobalListener implements Listener {
             MGPlayer damagerMGP = Register.getPlayer(damager);
             MGPlayer victimMGP = Register.getPlayer(victim);
 
-            if(damagerMGP.getTeam() == null ||damagerMGP.getTeam().getType() == TeamType.FFA || victimMGP.getTeam() == null || victimMGP.getTeam().getType() == TeamType.FFA) return;
+            if(damagerMGP.getTeam() == null || damagerMGP.getTeam().getType() == TeamType.FFA || victimMGP.getTeam() == null || victimMGP.getTeam().getType() == TeamType.FFA) return;
 
             if(damagerMGP.getTeam().getType() == victimMGP.getTeam().getType())
             {
