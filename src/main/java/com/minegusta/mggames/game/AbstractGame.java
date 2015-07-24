@@ -13,6 +13,7 @@ import com.minegusta.mggames.util.ScoreboardUtil;
 import com.minegusta.mggames.world.WorldManager;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -358,6 +359,7 @@ public abstract class AbstractGame {
             return;
         }
         WorldManager.loadWorld(world, false);
+        getWorld().getLivingEntities().stream().filter(e -> !(e instanceof Player)).forEach(LivingEntity::remove);
     }
 
     public Location getLobby()
