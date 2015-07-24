@@ -9,6 +9,7 @@ import com.minegusta.mggames.player.MGPlayer;
 import com.minegusta.mggames.register.Register;
 import com.minegusta.mggames.util.ChatUtil;
 import com.minegusta.mggames.util.ScoreboardUtil;
+import javafx.scene.layout.Priority;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -84,7 +85,7 @@ public class GlobalListener implements Listener {
     }
 
     //Stop damage in the lobby and hub
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onDamage(EntityDamageByEntityEvent e)
     {
         if(e.getEntity() instanceof Player)
@@ -98,10 +99,16 @@ public class GlobalListener implements Listener {
                 return;
             }
 
+            if(e.isCancelled())return;
+
             String cause = "";
             if(e.getDamager() instanceof Player)
             {
                 cause = e.getDamager().getName();
+            }
+            if(e.getDamager() instanceof Arrow && ((Arrow) e.getDamager()).getShooter() instanceof Player)
+            {
+                cause = ((Player) ((Arrow) e.getDamager()).getShooter()).getName();
             }
 
             if(mgp.getSession().getStage() == Stage.PLAYING && p.getHealth() - e.getDamage() <= 0)
@@ -235,6 +242,7 @@ public class GlobalListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTeamDamage(EntityDamageByEntityEvent e)
     {
+        if(e.isCancelled())return;
         if(e.getDamager() instanceof Player && e.getEntity() instanceof Player)
         {
             Player damager = (Player) e.getDamager();
