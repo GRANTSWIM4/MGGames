@@ -60,7 +60,7 @@ public class AdminCommand implements CommandExecutor
                 return true;
             }
 
-            gameConfig.set(gameName.get() + "." + ConfigValues.LOBBY_LOCATION.getPath(), LocationUtil.toString(p.getLocation()));
+            gameConfig.set(gameName.get() + "." + ConfigValues.LOBBY_LOCATION.getPath(), LocationUtil.toString(p.getLocation().getBlock().getLocation()));
 
             ChatUtil.sendFormattedMessage(p, "You set the lobby location!", "Use /gamereload for changes to take effect.");
 
@@ -95,7 +95,7 @@ public class AdminCommand implements CommandExecutor
             return true;
         }
 
-        String saved = LocationUtil.toString(p.getLocation());
+        String saved = LocationUtil.toString(p.getLocation().getBlock().getLocation());
 
         if(args[2].equalsIgnoreCase("add"))
         {
