@@ -84,14 +84,15 @@ public class KitRegistry {
                 } else if (slot.equalsIgnoreCase("cost")) {
                     cost[0] = f.getInt(kit + "." + slot, 0);
                 } else {
-                    String lore = f.getString(kit + "." + slot + ".lore");
-                    String name = f.getString(kit + "." + slot + ".name");
-                    int amount = f.getInt(kit + "." + slot + ".amount");
-                    int data = f.getInt(kit + "." + slot + ".data");
+                    String lore = f.getString(kit + "." + slot + ".lore", "");
+                    String name = f.getString(kit + "." + slot + ".name", "");
+                    int amount = f.getInt(kit + "." + slot + ".amount", 1);
+                    int data = f.getInt(kit + "." + slot + ".data", 0);
 
                     Map<Enchantment, Integer> enchantments = Maps.newHashMap();
 
-                    if (f.isSet(kit + "." + slot + ".enchantments")) {
+                    if (f.isSet(kit + "." + slot + ".enchantments"))
+                    {
                         f.getConfigurationSection(kit + "." + slot + ".enchantments").getKeys(false).stream().forEach(enchantment ->
                         {
                             Enchantment e = Enchantment.getByName(enchantment);

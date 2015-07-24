@@ -89,9 +89,14 @@ public class KitCommand implements CommandExecutor{
 
                     try
                     {
-                        String nameNew = pick.getItemMeta().getDisplayName();
-                        if(nameNew != null) name = nameNew;
-                        lore = pick.getItemMeta().getLore().get(0);
+                        if(pick.hasItemMeta() && pick.getItemMeta().hasDisplayName())
+                        {
+                            name = pick.getItemMeta().getDisplayName();
+                        }
+                        if(pick.hasItemMeta() && pick.getItemMeta().hasLore())
+                        {
+                            lore = pick.getItemMeta().getLore().get(0);
+                        }
                     } catch (Exception ignored){}
 
                     items.add(new MGItem(name, i, pick.getType(), pick.getAmount(), pick.getDurability(), lore, pick.getEnchantments()));
