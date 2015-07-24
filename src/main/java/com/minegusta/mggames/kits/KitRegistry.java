@@ -21,6 +21,11 @@ public class KitRegistry {
         kits.put(name, kit);
     }
 
+    public static void clearKits()
+    {
+        kits.clear();
+    }
+
     public static Kit getKit(String name)
     {
         return kits.get(name);
@@ -44,6 +49,8 @@ public class KitRegistry {
     public static void loadKits()
     {
         FileConfiguration f = ConfigManager.getKitFile();
+
+        clearKits();
 
         f.getKeys(false).stream().forEach(kit ->
         {
