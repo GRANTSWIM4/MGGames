@@ -135,14 +135,14 @@ public abstract class AbstractGame {
     public void setTeam(MGPlayer mgp)
     {
         Team joined = null;
-        int leastUsers = 0;
+        int leastUsers = 99999;
 
         for(Team team : teams.values())
         {
             if(team.getType() == TeamType.SPECTATOR)continue;
 
             int size = team.getPlayers().size();
-            if(size <= leastUsers || leastUsers == 0)
+            if(size <= leastUsers)
             {
                 joined = team;
                 leastUsers = size;
