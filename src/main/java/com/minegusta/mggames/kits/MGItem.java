@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.Potion;
 
 import java.util.Map;
 
@@ -42,6 +43,12 @@ public class MGItem
                 setItemMeta(meta);
             }
         };
+
+        if(material == Material.POTION && data > 16000)
+        {
+            Potion potion = Potion.fromItemStack(i);
+            potion.setSplash(true);
+        }
 
         enchantments.keySet().stream().forEach(ench -> i.addUnsafeEnchantment(ench, enchantments.get(ench)));
         return i;
