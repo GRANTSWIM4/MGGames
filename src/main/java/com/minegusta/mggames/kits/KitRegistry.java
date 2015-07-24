@@ -6,11 +6,13 @@ import com.minegusta.mggames.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 public class KitRegistry {
@@ -86,6 +88,19 @@ public class KitRegistry {
                     String name = f.getString(kit + "." + slot + ".name");
                     int amount = f.getInt(kit + "." + slot + ".amount");
                     int data = f.getInt(kit + "." + slot + ".data");
+
+                    Map<Enchantment, Integer> enchantments = Maps.newHashMap();
+
+                    if (f.isSet(kit + "." + slot + ".enchantments")) {
+                        f.getConfigurationSection(kit + "." + slot + ".enchantments").getKeys(false).stream().forEach(enchantment ->
+                        {
+                            Enchantment e = Enchantment.getByName(enchantment);
+                            int level = f.getInt(kit + "." + slot + ".enchantments." + enchantment);
+
+                            enchantments.put(e, level);
+                        });
+                    }
+
                     Material material;
                     try {
                         material = Material.valueOf(f.getString(kit + "." + slot + ".material"));
@@ -93,7 +108,7 @@ public class KitRegistry {
                         material = Material.POTATO;
                     }
 
-                    MGItem stack = new MGItem(name, Integer.parseInt(slot), material, amount, data, lore);
+                    MGItem stack = new MGItem(name, Integer.parseInt(slot), material, amount, data, lore, enchantments);
                     items.add(stack);
                 }
             });

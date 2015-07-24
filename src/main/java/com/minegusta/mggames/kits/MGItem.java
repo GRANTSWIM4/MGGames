@@ -1,9 +1,14 @@
 package com.minegusta.mggames.kits;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MGItem
 {
@@ -13,11 +18,13 @@ public class MGItem
     private int amount;
     private int data;
     private int slot;
+    private Map<Enchantment, Integer> enchantments = Maps.newHashMap();
 
-    public MGItem(String name, int slot, Material material, int amount, int data, String lore)
+    public MGItem(String name, int slot, Material material, int amount, int data, String lore, Map<Enchantment, Integer> enchantments)
     {
         this.name = name;
         this.material = material;
+        this.enchantments = enchantments;
         this.slot = slot;
         this.amount = amount;
         this.data = data;
@@ -33,6 +40,12 @@ public class MGItem
                 meta.setLore(Lists.newArrayList(lore));
                 meta.setDisplayName(name);
                 setItemMeta(meta);
+
+                for(Enchantment i : getEnchantments().keySet())
+                {
+                    addUnsafeEnchantment(i, getEnchantments().get(i));
+                }
+
             }
         };
     }
@@ -40,6 +53,11 @@ public class MGItem
     public String getName()
     {
         return name;
+    }
+
+    public Map<Enchantment, Integer> getEnchantments()
+    {
+        return enchantments;
     }
 
     public int getData()

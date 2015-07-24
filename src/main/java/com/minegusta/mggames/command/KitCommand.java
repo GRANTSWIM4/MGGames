@@ -1,6 +1,7 @@
 package com.minegusta.mggames.command;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.minegusta.mggames.config.ConfigManager;
 import com.minegusta.mggames.kits.KitRegistry;
 import com.minegusta.mggames.kits.MGItem;
@@ -13,12 +14,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class KitCommand implements CommandExecutor{
@@ -90,14 +94,14 @@ public class KitCommand implements CommandExecutor{
                         lore = pick.getItemMeta().getLore().get(0);
                     } catch (Exception ignored){}
 
-                    items.add(new MGItem(name, i, pick.getType(), pick.getAmount(), pick.getDurability(), lore));
+                    items.add(new MGItem(name, i, pick.getType(), pick.getAmount(), pick.getDurability(), lore, pick.getEnchantments()));
                 }
             }
 
-            if(p.getInventory().getHelmet() != null)items.add(new MGItem(p.getInventory().getHelmet().getType().name(), 103, p.getInventory().getHelmet().getType(), 1, p.getInventory().getHelmet().getDurability(), ""));
-            if(p.getInventory().getBoots() != null)items.add(new MGItem(p.getInventory().getBoots().getType().name(), 100, p.getInventory().getBoots().getType(), 1, p.getInventory().getBoots().getDurability(), ""));
-            if(p.getInventory().getChestplate() != null)items.add(new MGItem(p.getInventory().getChestplate().getType().name(), 102, p.getInventory().getChestplate().getType(), 1, p.getInventory().getChestplate().getDurability(), ""));
-            if(p.getInventory().getLeggings() != null)items.add(new MGItem(p.getInventory().getLeggings().getType().name(), 101, p.getInventory().getLeggings().getType(), 1, p.getInventory().getLeggings().getDurability(), ""));
+            if(p.getInventory().getHelmet() != null)items.add(new MGItem(p.getInventory().getHelmet().getType().name(), 103, p.getInventory().getHelmet().getType(), 1, p.getInventory().getHelmet().getDurability(), "", p.getInventory().getHelmet().getEnchantments()));
+            if(p.getInventory().getBoots() != null)items.add(new MGItem(p.getInventory().getBoots().getType().name(), 100, p.getInventory().getBoots().getType(), 1, p.getInventory().getBoots().getDurability(), "", p.getInventory().getBoots().getEnchantments()));
+            if(p.getInventory().getChestplate() != null)items.add(new MGItem(p.getInventory().getChestplate().getType().name(), 102, p.getInventory().getChestplate().getType(), 1, p.getInventory().getChestplate().getDurability(), "", p.getInventory().getChestplate().getEnchantments()));
+            if(p.getInventory().getLeggings() != null)items.add(new MGItem(p.getInventory().getLeggings().getType().name(), 101, p.getInventory().getLeggings().getType(), 1, p.getInventory().getLeggings().getDurability(), "", p.getInventory().getLeggings().getEnchantments()));
 
             effects.addAll(p.getActivePotionEffects().stream().collect(Collectors.toList()));
 
@@ -113,6 +117,10 @@ public class KitCommand implements CommandExecutor{
                         f.set(kitName + "." + slot + ".material", i.getMaterial().name());
                         f.set(kitName + "." + slot + ".lore", ChatColor.stripColor(i.getLore()));
                         f.set(kitName + "." + slot + ".data", i.getData());
+                        i.getEnchantments().keySet().stream().forEach(ench ->
+                        {
+                            f.set(kitName + "." + slot + ".enchantments." + ench.getName(), i.getEnchantments().get(ench));
+                        });
                     });
             effects.stream().forEach(effect -> f.set(kitName + "." + "potion-effects." + effect.getType().getName(), effect.getAmplifier()));
 
