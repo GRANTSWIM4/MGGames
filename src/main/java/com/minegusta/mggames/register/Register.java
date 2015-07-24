@@ -19,6 +19,11 @@ public class Register
         games.put(name, game);
     }
 
+    public static void clearGames()
+    {
+        games.clear();
+    }
+
     public static Collection<AbstractGame> getGames()
     {
         return games.values();

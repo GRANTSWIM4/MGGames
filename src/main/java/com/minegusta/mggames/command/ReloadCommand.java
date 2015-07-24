@@ -24,6 +24,8 @@ public class ReloadCommand implements CommandExecutor
             game.onStop(StopReason.RELOAD);
         });
 
+        Register.clearGames();
+
         KitRegistry.loadKits();
 
         ConfigManager.loadSessions();
